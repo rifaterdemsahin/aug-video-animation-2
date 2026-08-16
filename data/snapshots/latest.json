@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "updatedAt": "2026-08-16T18:05:04.089224Z",
+  "reverseVideo": {
+    "title": "Reverse Response Reference Video",
+    "sourceUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "localPath": "uploads/reference_video.mp4",
+    "notes": "Reverse-engineering high retention YouTube tech architecture explainer format."
+  },
+  "scenes": []
+}
