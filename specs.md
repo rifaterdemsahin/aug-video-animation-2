@@ -414,20 +414,22 @@ All 10 HTML views utilize a cohesive CSS custom-property design system with syst
 }
 ```
 
-### 6.2. Master Page Catalog
+### 6.2. Master Page Catalog (Logical Production Order) 🎬
 
-| File | Page Title | Primary Utility & Functional Specs |
+The application navigation is organized in a deterministic, step-by-step production sequence starting with Research and culminating in the overview dashboard:
+
+| Step & File | Page Title | Primary Utility & Functional Specs |
 |---|---|---|
-| `index.html` | AI Second Brain Landing | Hero video player, 16-stage pipeline overview cards, dynamic statistics counters, and global navigation. |
-| `research.html` | Shotlist Studio Editor | Master workspace: vertical shot cards, inline script editing, audio player, AI rewrite assistant modal, Azure sync modal. |
-| `timeline.html` | Visual Timeline Sequencer | Gantt-style horizontal timeline displaying scenes 1–6, shot duration blocks, audio waveforms, and interactive scrubber. |
-| `shotlist.html` | Shotlist Data Grid | High-density sortable/filterable data table with inline editing, batch tagging, and duration calculators. |
-| `scenes.html` | Scene Breakdown Editor | Structural narrative editor for 6 main scenes, target word count tracking, and scene color coding. |
-| `voice_over.html` | Voiceover Teleprompter | Large-type teleprompter, speaking rate (WPM) meter, sentence-by-sentence recording checklist. |
-| `script_guru.html` | Script Guru AI Coach | Pacing diagnostics, reading level analysis, engagement hooks evaluator, and AI script optimization. |
-| `gallery.html` | Media Asset Gallery | Visual catalog of 105+ stills and 26 Flow videos, stage filtering (`00`–`15`), and modal media preview. |
-| `tactic.html` | Production Tactics & SOPs | Standard Operating Procedures, video export presets, DaVinci Resolve settings, and task checklists. |
-| `analysis.html` | Video Production Analytics | Runtime breakdown, visual vs. spoken pacing metrics, retention drop-off estimations, and tag distribution. |
+| `🎬 1. research.html` | 🎬 Master Research Studio | **Anchor Step:** Benchmark reference video breakdown second-by-second, **manually triggered Second Brain vault search & note injection**, vertical shot cards, and multimedia uploader. |
+| `🧠 2. script_guru.html` | 🧠 Script Guru AI Coach | Spoken cadence analysis, reading level diagnostics, retention hooks evaluator, and AI script optimization. |
+| `📑 3. scenes.html` | 📑 Scene Breakdown Editor | Macro narrative architecture for 6 main scenes, target word counts, and color-coded scene envelopes. |
+| `📊 4. shotlist.html` | 📊 Shotlist Data Grid | High-density sortable/filterable data table, inline editing, batch metadata tagging, and CSV/JSON export. |
+| `⏱️ 5. timeline.html` | ⏱️ Visual Timeline Sequencer | Gantt-style horizontal timeline displaying scenes 1–6, shot duration blocks, audio waveforms, and interactive scrubber. |
+| `🎙️ 6. voice_over.html` | 🎙️ Voiceover Teleprompter | Large-type teleprompter with adjustable WPM, speaking cadence meter, and sentence-by-sentence recording checklist. |
+| `🖼️ 7. gallery.html` | 🖼️ Media Asset Gallery | Visual catalog of 105+ stills and 26 Flow videos, stage filtering (`00`–`15`), and modal media preview. |
+| `⚔️ 8. tactic.html` | ⚔️ Production Tactics & SOPs | Standard Operating Procedures, video export presets, DaVinci Resolve render parameters, and quality gates. |
+| `📈 9. analysis.html` | 📈 Video Production Analytics | Runtime breakdown, visual vs. spoken pacing metrics, retention drop-off curve, and tag distribution. |
+| `🏠 10. index.html` | 🏠 Overview & Showcase | Hero video player, 16-stage pipeline overview cards, dynamic statistics counters, and global navigation. |
 
 ### 6.3. Client-Side State Synchronization & Offline-First Strategy
 - **Primary Storage**: Browser `localStorage` (`key = "wiganimation_shotlist_state"`).
@@ -548,16 +550,31 @@ To reproduce this entire repository from zero:
 
 ---
 
-## 10. Reverse Response Video Specification
-- **Reference Video Benchmark**: A high-retention tech explainer video is chosen as the structural anchor.
-- **Second-by-Second Research Mapping**: In `research.html`, the video is broken down second-by-second (0:00 Hook, 0:30 Problem, 1:00 Reverse Architecture, 1:30 Workbench, 2:00 Live Sync, 2:30 Retention, 3:00 Outro).
-- **Second Brain Knowledge Connection**: Uses `/api/vault-search` to query local Obsidian notes and embed insights directly into script beats.
-- **Multimedia Asset Upload**: Direct file/video uploader via `/api/upload` storing files in `uploads/` for direct reference in the storyboard.
+## 10. Reverse Response Video & Second Brain Specification 🎬🧠
+
+### 10.1. Benchmark Reference Video Integration 📹
+- **Selected Viral Model**: A proven high-retention video structure serves as the pacing benchmark.
+- **Second-by-Second Scrubber**: In `research.html`, the video is dissected second-by-second across key psychological gates:
+  - `0:00 - 0:15`: ⚡ Hook & Pain Point Setup ("46,000 notes chaos").
+  - `0:15 - 0:45`: 🧩 The Core Problem & Framework Gap (Static PARA vs Active Neural Synthesis).
+  - `0:45 - 1:15`: 🚀 Discovery & Reverse Response Architecture.
+  - `1:15 - 1:45`: 🛠️ The 16-Stage Workbench & Pacing Guardrails.
+  - `1:45 - 2:20`: ⚡ Live Execution, WPM Monitoring & Real-Time Sync.
+  - `2:20 - 3:00`: 🏆 The Payoff, Call to Action & Roger Rabbit Outro.
+
+### 10.2. Manually Triggered Second Brain Workflows 🧠
+To ensure precision and user control, Second Brain integration is **manually triggered**:
+1. **🔍 Manual Vault Query Trigger (`#btn-trigger-vault-search`)**: User types search queries (e.g. `obsidian`, `neural`, `agents`) and manually hits *Trigger Search* to execute an inverted-index fuzzy search across local Obsidian markdown vaults without noisy auto-suggestions.
+2. **✍️ Manual Personal Insight Injection (`#manual-note-drawer`)**: A dedicated manual drawer allows the creator to input personal takeaways, anecdotes, or niche-specific knowledge and manually inject them directly into active shot beats.
+3. **🔗 Manual Vault Node Linking (`insertVaultReference`)**: Clicking any vault search result directly attaches the source file reference tag (`[Ref: path/to/note.md]`) into the visual notes metadata.
+
+### 10.3. Direct Multimedia Content Upload 📤
+- Direct file/video uploader via `POST /api/upload` storing raw master footage, B-roll clips, Canva slide deck exports, and audio recordings in `uploads/` for immediate reference in the storyboard.
 
 ---
 
-## 11. Signature Outro
-- All views feature a dynamic **Roger Rabbit style hand-drawn cartoon signature** for **Rifat Erdem Sahin** (`.roger-rabbit-signature`) with animated cartoon stars and gradient typography.
+## 11. Signature Outro ⭐
+- All views feature a dynamic **Roger Rabbit style hand-drawn cartoon signature** for **Rifat Erdem Sahin** (`.roger-rabbit-signature`) with animated cartoon stars, cursive typography, and gradient animations.
 
 ---
 *End of Specification Document.*

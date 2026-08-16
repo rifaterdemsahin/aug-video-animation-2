@@ -129,18 +129,36 @@
           </div>
         </div>
 
-        <!-- Second Brain Vault Retrieval -->
+        <!-- Second Brain Vault Retrieval (Manually Triggered) -->
         <div class="card">
           <div class="card-header">
-            <span class="card-title">🧠 Vault Intelligence</span>
-            <span class="badge badge-purple">Inverted Index</span>
+            <span class="card-title">🧠 Second Brain Intelligence</span>
+            <span class="badge badge-purple">Manual Triggers</span>
           </div>
-          <div class="form-group">
-            <input type="text" class="form-input" id="vault-search-input" placeholder="Search Obsidian vault or notes...">
+          <p style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+            Manually query Obsidian notes or inject personal insights into script beats:
+          </p>
+          <div class="form-group" style="margin-bottom: 0.5rem;">
+            <input type="text" class="form-input" id="vault-search-input" placeholder="Query term (e.g. obsidian, agents)...">
           </div>
+          <div style="display: flex; gap: 0.4rem; margin-bottom: 0.75rem;">
+            <button class="btn btn-sm btn-purple" id="btn-trigger-vault-search" style="flex: 1;">🔍 Trigger Search</button>
+            <button class="btn btn-sm" id="btn-manual-note-add" style="flex: 1;">✍️ Manual Note</button>
+          </div>
+
+          <!-- Manual Note Drawer -->
+          <div id="manual-note-drawer" style="display: none; padding: 0.6rem; background: var(--bg-surface-elevated); border-radius: var(--radius-sm); margin-bottom: 0.75rem; border: 1px solid var(--border-color);">
+            <label class="form-label" style="font-size: 0.75rem;">Insert Manual Second Brain Note</label>
+            <textarea class="form-textarea" id="manual-note-text" rows="2" placeholder="Write personal takeaway or concept..." style="font-size: 0.8rem;"></textarea>
+            <div style="display: flex; justify-content: flex-end; gap: 0.4rem; margin-top: 0.4rem;">
+              <button class="btn btn-sm" id="btn-cancel-manual-note">Cancel</button>
+              <button class="btn btn-sm btn-success" id="btn-insert-manual-note">Inject to Active Shot</button>
+            </div>
+          </div>
+
           <div id="vault-results-list">
-            <div style="color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 1rem;">
-              Type a term (e.g. "obsidian", "script", "scene") to query local files.
+            <div style="color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 0.75rem;">
+              Click <strong>Trigger Search</strong> or type to query indexed vault files.
             </div>
           </div>
         </div>
@@ -277,38 +295,80 @@
         else beatHighlight.textContent = "Active Beat: Scene 6 Payoff & Roger Rabbit Outro";
       });
 
-      // Search Vault Inverted Index
+      // Search Vault Inverted Index (Manual or auto-debounced)
       const searchInput = document.getElementById("vault-search-input");
+      const executeVaultSearch = async () => {
+        const q = searchInput.value.trim();
+        if (!q) {
+          document.getElementById("vault-results-list").innerHTML = `<div style="color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 1rem;">Type a term or click Trigger Search.</div>`;
+          return;
+        }
+        try {
+          const res = await fetch(`/api/vault-search?q=${encodeURIComponent(q)}`);
+          const data = await res.json();
+          if (data.results && data.results.length > 0) {
+            document.getElementById("vault-results-list").innerHTML = data.results.map(r => `
+              <div class="vault-result-item" onclick="insertVaultReference('${r.path}')" title="Click to manually insert reference into active shot">
+                <strong>${r.path}</strong>
+                <div style="display:flex; justify-content:space-between; color:var(--text-muted); font-size:0.7rem; margin-top:2px;">
+                  <span>Score: ${Math.round(r.score * 100)}%</span>
+                  <span>${r.size} bytes</span>
+                </div>
+              </div>
+            `).join("");
+          } else {
+            document.getElementById("vault-results-list").innerHTML = `<div style="color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 1rem;">No matching vault files found.</div>`;
+          }
+        } catch(e) {
+          console.error(e);
+        }
+      };
+
+      document.getElementById("btn-trigger-vault-search").addEventListener("click", executeVaultSearch);
+
       let searchDebounce = null;
       searchInput.addEventListener("input", () => {
         clearTimeout(searchDebounce);
-        searchDebounce = setTimeout(async () => {
-          const q = searchInput.value.trim();
-          if (!q) {
-            document.getElementById("vault-results-list").innerHTML = `<div style="color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 1rem;">Type a term to query local files.</div>`;
-            return;
-          }
-          try {
-            const res = await fetch(`/api/vault-search?q=${encodeURIComponent(q)}`);
-            const data = await res.json();
-            if (data.results && data.results.length > 0) {
-              document.getElementById("vault-results-list").innerHTML = data.results.map(r => `
-                <div class="vault-result-item" title="Click to insert file reference into script">
-                  <strong>${r.path}</strong>
-                  <div style="display:flex; justify-content:space-between; color:var(--text-muted); font-size:0.7rem; margin-top:2px;">
-                    <span>Score: ${Math.round(r.score * 100)}%</span>
-                    <span>${r.size} bytes</span>
-                  </div>
-                </div>
-              `).join("");
-            } else {
-              document.getElementById("vault-results-list").innerHTML = `<div style="color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 1rem;">No matching vault files found.</div>`;
-            }
-          } catch(e) {
-            console.error(e);
-          }
-        }, 300);
+        searchDebounce = setTimeout(executeVaultSearch, 300);
       });
+
+      // Manual Note Insertion Controls
+      const manualDrawer = document.getElementById("manual-note-drawer");
+      document.getElementById("btn-manual-note-add").addEventListener("click", () => {
+        manualDrawer.style.display = manualDrawer.style.display === "none" ? "block" : "none";
+      });
+      document.getElementById("btn-cancel-manual-note").addEventListener("click", () => {
+        manualDrawer.style.display = "none";
+      });
+      document.getElementById("btn-insert-manual-note").addEventListener("click", () => {
+        const text = document.getElementById("manual-note-text").value.trim();
+        if (!text) {
+          studio.toast("Please type a note to insert", "warning");
+          return;
+        }
+        // Insert into first available shot or active
+        if (studio.state.scenes.length && studio.state.scenes[0].shots.length) {
+          const targetShot = studio.state.scenes[0].shots[0];
+          targetShot.voiceover = (targetShot.voiceover || "") + " " + text;
+          targetShot.visualNotes = (targetShot.visualNotes || "") + ` [Second Brain: ${text}]`;
+          studio.saveLocalState();
+          renderShots(studio.state);
+          updatePacingStats(studio.state);
+          document.getElementById("manual-note-text").value = "";
+          manualDrawer.style.display = "none";
+          studio.toast("Manually injected Second Brain insight into Scene 1 Shot 1!", "success");
+        }
+      });
+
+      window.insertVaultReference = (path) => {
+        if (studio.state.scenes.length && studio.state.scenes[0].shots.length) {
+          const targetShot = studio.state.scenes[0].shots[0];
+          targetShot.visualNotes = (targetShot.visualNotes || "") + ` [Ref: ${path}]`;
+          studio.saveLocalState();
+          renderShots(studio.state);
+          studio.toast(`Linked vault file '${path}' to shot!`, "success");
+        }
+      };
 
       // Upload Modal Controllers
       const modalUpload = document.getElementById("modal-upload");

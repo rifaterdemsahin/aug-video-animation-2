@@ -38,20 +38,20 @@ fly deploy
 
 ---
 
-## 🌟 Master Page Catalog (10 Views)
+## 🌟 Master Page Catalog (Logical Production Workflow) 🎬
 
-1. [index.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/index.html) — Landing page, 16-stage pipeline overview cards, and global navigation.
-2. [research.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/research.html) — Master Shotlist Studio, Second Brain Vault Retrieval, and Video Upload.
-3. [timeline.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/timeline.html) — Gantt-style horizontal visual timeline sequencer.
-4. [shotlist.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/shotlist.html) — High-density data grid with sorting and CSV/JSON export.
-5. [scenes.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/scenes.html) — Scene breakdown and narrative structure editor for 6 main scenes.
-6. [voice_over.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/voice_over.html) — Voiceover teleprompter with WPM meter and recording checklist.
-7. [script_guru.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/script_guru.html) — AI script coach, pacing diagnostics, and engagement hooks.
-8. [gallery.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/gallery.html) — Visual catalog of 16-stage stills and 26 Flow video clips.
-9. [tactic.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/tactic.html) — Production tactics, SOPs, DaVinci Resolve settings, and quality gates.
-10. [analysis.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/analysis.html) — Video production analytics and audience retention simulation.
+1. [research.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/research.html) — 🎬 **1. Research & Master Studio:** Reverse response reference video breakdown, manually triggered Second Brain vault search & note injection, vertical shot cards, and video upload.
+2. [script_guru.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/script_guru.html) — 🧠 **2. Script Guru:** AI script coach, pacing diagnostics, reading ease, and engagement hooks.
+3. [scenes.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/scenes.html) — 📑 **3. Scenes:** Scene narrative architecture for 6 main scenes, target word counts, and color themes.
+4. [shotlist.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/shotlist.html) — 📊 **4. Shotlist:** High-density data grid with sorting, inline editing, and CSV/JSON export.
+5. [timeline.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/timeline.html) — ⏱️ **5. Timeline:** Gantt-style horizontal visual timeline sequencer and scrubber.
+6. [voice_over.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/voice_over.html) — 🎙️ **6. Voiceover:** Teleprompter with WPM cadence meter and recording checklist.
+7. [gallery.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/gallery.html) — 🖼️ **7. Gallery:** Visual asset catalog of 16-stage slide stills and 26 Flow video clips.
+8. [tactic.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/tactic.html) — ⚔️ **8. Tactics:** Production SOPs, DaVinci Resolve render presets, and quality gates.
+9. [analysis.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/analysis.html) — 📈 **9. Analytics:** Video production metrics, pacing distribution, and audience retention curve.
+10. [index.html](file:///Users/rifaterdemsahin/projects/aug-video-animation-2/index.html) — 🏠 **10. Overview:** Studio landing page, 16-stage pipeline showcase, and stats.
 
 ---
 
-## ✍️ Signature Outro
-Designed and engineered with Roger Rabbit style signature signoff by **Rifat Erdem Sahin**.
+## ✍️ Signature Outro ⭐
+Designed and engineered with Roger Rabbit style energetic cartoon signature by **Rifat Erdem Sahin**.
