@@ -550,25 +550,44 @@ To reproduce this entire repository from zero:
 
 ---
 
-## 10. Reverse Response Video & Second Brain Manual Upload Specification 🎬🧠
+## 10. Reverse Response Video & 12-Step End-to-End Production Workflow 🎬⚡
 
-### 10.1. Master Control Dashboard (`index.html`) 🏠
-- Serves as the central navigation control station for the entire 10-step multimedia production studio.
-- Displays quick status badges, duration calculators, and launch buttons for all 10 production views without complex background vault scanning.
+```
++---------------------------------------------------------------------------------------------------------+
+|                               12-STEP REVERSE RESPONSE PRODUCTION WORKFLOW                             |
+|                                                                                                         |
+|  [1. Find Video] ---> [2. Download] ---> [3. Dissect] ---> [4. Google Flow] ---> [5. 2nd Brain Data]   |
+|         |                                                                                  |            |
+|         v                                                                                  v            |
+|  [6. Load Manually] -> [7. Mix Flow & 2nd Brain] -> [8. Canva Export] -> [9. Timeline] -> [9B. RR Stamp] |
+|                                                                                  |                      |
+|                                                                                  v                      |
+|                                     [12. Analytics] <--- [11. YouTube MCP] <--- [10. Export & Upload]   |
++---------------------------------------------------------------------------------------------------------+
+```
 
-### 10.2. Research Studio: Reverse Response Video Model (`research.html`) 📹
-- **Selected Viral Benchmark**: Pacing benchmark video mapped second-by-second across 6 psychological gates:
-  - `0:00 - 0:15`: ⚡ Hook & Problem Setup ("46,000 notes chaos").
-  - `0:15 - 0:45`: 🧩 Framework Gap (Static PARA vs Active Neural Synthesis).
-  - `0:45 - 1:15`: 🚀 Discovery & Reverse Response Architecture.
-  - `1:15 - 1:45`: 🛠️ The 16-Stage Workbench & Pacing Guardrails.
-  - `1:45 - 2:20`: ⚡ Live Execution, WPM Monitoring & Real-Time Sync.
-  - `2:20 - 3:00`: 🏆 The Payoff, Call to Action & Roger Rabbit Outro.
+### 10.1. The 12-Stage Production Journey 🚀
+1. 🔍 **Find Popular Video**: Identify proven viral response models with strong audience retention in the target niche.
+2. ⬇️ **Download Master Reference**: Save reference MP4 into workspace / uploads directory for local analysis.
+3. 🔬 **Dissect Second-by-Second**: Dissect visual pattern interrupts, hooks, and pacing gates (`0:00` Hook, `0:30` Problem, `1:00` Reverse Engine, `1:30` Workbench, `2:00` Live Sync, `2:30` Retention, `3:00` Outro).
+4. 🤖 **Generate Google Flow Assets**: Render 26 AI-animated Flow video clips with extracted first-frame poster images.
+5. 🧠 **Get Second Brain Data**: Retrieve personal Obsidian notes, core mental models, and real-world project experiences.
+6. 📂 **Load Manually in Research Studio**: Drag-and-drop `.md` note files or paste markdown concepts directly into the workbench.
+7. 🔀 **Mix Flow & Second Brain**: Synthesize personal insights with visual Flow clips into storyboard shot beats.
+8. 🎨 **Export to Canva Folder**: Export slide deck stills across 16 pipeline stages (`00_index` through `15_tactics`).
+9. ⏱️ **Place onto Timeline**: Align spoken audio waveforms (140 WPM target) and video blocks in the interactive sequencer.
+9B. 🐰 **Add Roger Rabbit Signature**: Stamp energetic cartoon outro signature for *Rifat Erdem Sahin*.
+10. 🚀 **Export & Upload to YouTube**: Render 4K ProRes / Rec.709 master video and upload to channel.
+11. 🔌 **Automate Metadata via YouTube MCP**: Update title, chapters, descriptions, and SEO tags automatically via YouTube MCP server.
+12. 📈 **Check Production Analytics**: Review audience retention drop-off curve, CTR metrics, and viewer engagement.
 
-### 10.3. Research Studio: Second Brain Manual Upload & Paste 🧠
-- **📂 Manual Obsidian File Drop & Select (`#obsidian-drop-zone`)**: Creator drags and drops Obsidian `.md` or `.txt` note files directly into the browser to load notes on-demand.
+### 10.2. Master Control Dashboard (`index.html`) 🏠
+- Visual control station rendering the top 12-stage flowchart diagram and direct navigation cards for all 10 views.
+
+### 10.3. Research Studio: Second Brain Manual Upload & Paste (`research.html`) 🧠
+- **📂 Manual Obsidian File Drop & Select (`#obsidian-drop-zone`)**: Creator drags and drops Obsidian `.md` or `.txt` note files directly.
 - **✍️ Direct Markdown Paste Area (`#manual-note-input`)**: Creator pastes custom insights, frameworks, or note excerpts manually.
-- **⚡ Instant Shot Injection (`#btn-inject-direct` & `injectSnippetText`)**: 1-click injection of loaded Second Brain thoughts directly into Scene 1 or active shot beats.
+- **⚡ Instant Shot Injection (`injectSnippetText`)**: 1-click injection of loaded Second Brain thoughts directly into Scene 1 or active shot beats.
 - **📤 Media File Uploader (`POST /api/upload`)**: Uploads reference video clips, Canva slide deck stills, and B-roll directly into `uploads/`.
 
 ---

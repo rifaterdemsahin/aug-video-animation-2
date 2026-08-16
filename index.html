@@ -3,9 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Studio Master Dashboard — August Video Animation #2</title>
+  <title>Studio Master Dashboard & Workflow — August Video Animation #2</title>
   <link rel="stylesheet" href="style.css">
   <style>
+    /* 12-Step Production Pipeline Flow Diagram */
+    .workflow-diagram-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+    .workflow-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 0.85rem;
+      margin-top: 1.25rem;
+    }
+    .workflow-node {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: all var(--transition-fast);
+    }
+    .workflow-node:hover {
+      border-color: var(--accent-blue);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+    .workflow-node.highlight-special {
+      border: 2px dashed rgba(236, 72, 153, 0.5);
+      background: rgba(236, 72, 153, 0.04);
+    }
+    .workflow-node.highlight-special:hover {
+      border-color: var(--accent-pink);
+    }
+    .node-number {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-blue);
+      margin-bottom: 0.3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .node-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .node-desc {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* Hub Navigation Directory */
     .dashboard-hub-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -74,11 +140,159 @@
     <div class="view-header">
       <div class="view-title-group">
         <h1>🏠 Studio Production Control Dashboard</h1>
-        <p>Deterministic 10-step multimedia workflow: From second-by-second reverse research to final 4K delivery.</p>
+        <p>End-to-end multimedia pipeline: From viral reverse engineering to YouTube MCP deployment and analytics.</p>
       </div>
       <div class="header-actions">
         <a href="research.html" class="btn btn-primary">Start Step 1: Research 🎬</a>
         <button class="btn" id="btn-dashboard-sync">☁️ Sync All State</button>
+      </div>
+    </div>
+
+    <!-- 🌟 Production Workflow Diagram (12 Steps) -->
+    <div class="workflow-diagram-container">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+        <div>
+          <h2 style="font-size: 1.2rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem;">
+            <span>⚡ End-to-End Production Process Flowchart</span>
+            <span class="badge badge-green">12 Deterministic Stages</span>
+          </h2>
+          <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">
+            The complete journey from raw reference video selection to live YouTube MCP release and retention tracking.
+          </p>
+        </div>
+        <span class="badge badge-purple">Reverse Engineering Framework</span>
+      </div>
+
+      <div class="workflow-steps-grid">
+        <!-- 1 -->
+        <div class="workflow-node">
+          <div class="node-number">
+            <span>Phase 01</span>
+            <span>🔍</span>
+          </div>
+          <div class="node-title">1. Find Popular Video</div>
+          <p class="node-desc">Identify proven high-retention viral video model in the niche.</p>
+        </div>
+
+        <!-- 2 -->
+        <div class="workflow-node">
+          <div class="node-number">
+            <span>Phase 02</span>
+            <span>⬇️</span>
+          </div>
+          <div class="node-title">2. Download It</div>
+          <p class="node-desc">Save master MP4 reference file into workspace / uploads.</p>
+        </div>
+
+        <!-- 3 -->
+        <div class="workflow-node">
+          <div class="node-number">
+            <span>Phase 03</span>
+            <span>🔬</span>
+          </div>
+          <div class="node-title">3. Dissect It</div>
+          <p class="node-desc">Map second-by-second hooks, pacing, and retention drop-off gates.</p>
+        </div>
+
+        <!-- 4 -->
+        <div class="workflow-node">
+          <div class="node-number">
+            <span>Phase 04</span>
+            <span>🤖</span>
+          </div>
+          <div class="node-title">4. Create Google Flow</div>
+          <p class="node-desc">Generate 26 AI Flow animated clips with visual poster frames.</p>
+        </div>
+
+        <!-- 5 -->
+        <div class="workflow-node">
+          <div class="node-number">
+            <span>Phase 05</span>
+            <span>🧠</span>
+          </div>
+          <div class="node-title">5. Get 2nd Brain Data</div>
+          <p class="node-desc">Retrieve personal Obsidian notes, concepts, and frameworks.</p>
+        </div>
+
+        <!-- 6 -->
+        <div class="workflow-node">
+          <div class="node-number">
+            <span>Phase 06</span>
+            <span>📂</span>
+          </div>
+          <div class="node-title">6. Load It Manually</div>
+          <p class="node-desc">Drag & drop .md notes or paste text directly in Research Studio.</p>
+        </div>
+
+        <!-- 7 -->
+        <div class="workflow-node">
+          <div class="node-number">
+            <span>Phase 07</span>
+            <span>🔀</span>
+          </div>
+          <div class="node-title">7. Mix Flow & 2nd Brain</div>
+          <p class="node-desc">Synthesize personal thoughts into script beats and storyboard shots.</p>
+        </div>
+
+        <!-- 8 -->
+        <div class="workflow-node">
+          <div class="node-number">
+            <span>Phase 08</span>
+            <span>🎨</span>
+          </div>
+          <div class="node-title">8. Export Canva Folder</div>
+          <p class="node-desc">Export slide deck stills across 16 pipeline stages (00–15).</p>
+        </div>
+
+        <!-- 9 -->
+        <div class="workflow-node">
+          <div class="node-number">
+            <span>Phase 09</span>
+            <span>⏱️</span>
+          </div>
+          <div class="node-title">9. Place onto Timeline</div>
+          <p class="node-desc">Align audio waveforms, voiceover (140 WPM), and video blocks.</p>
+        </div>
+
+        <!-- 9B -->
+        <div class="workflow-node highlight-special">
+          <div class="node-number" style="color: var(--accent-pink);">
+            <span>Phase 09B</span>
+            <span>🐰 ⭐</span>
+          </div>
+          <div class="node-title" style="color: var(--accent-pink);">9B. Roger Rabbit Signature</div>
+          <p class="node-desc">Stamp animated Roger Rabbit signature outro for Rifat Erdem Sahin.</p>
+        </div>
+
+        <!-- 10 -->
+        <div class="workflow-node">
+          <div class="node-number">
+            <span>Phase 10</span>
+            <span>🚀</span>
+          </div>
+          <div class="node-title">10. Export & Upload YT</div>
+          <p class="node-desc">Render 4K master ProRes / H.264 and upload to YouTube channel.</p>
+        </div>
+
+        <!-- 11 -->
+        <div class="workflow-node">
+          <div class="node-number">
+            <span>Phase 11</span>
+            <span>🔌</span>
+          </div>
+          <div class="node-title">11. YouTube MCP Update</div>
+          <p class="node-desc">Automate title, SEO tags, timestamped chapters via YouTube MCP.</p>
+        </div>
+
+        <!-- 12 -->
+        <div class="workflow-node">
+          <div class="node-number">
+            <span>Phase 12</span>
+            <span>📈</span>
+          </div>
+          <div class="node-title">12. Check Analytics</div>
+          <p class="node-desc">Monitor retention curves, CTR performance, and viewer metrics.</p>
+        </div>
       </div>
     </div>
 
@@ -96,10 +310,10 @@
       <div class="card">
         <div class="card-header">
           <span class="card-title">🧠 Second Brain</span>
-          <span class="badge badge-purple">Manual Triggers</span>
+          <span class="badge badge-purple">Manual Upload</span>
         </div>
-        <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent-purple);">Active</div>
-        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem;">Obsidian fuzzy index & note injection.</p>
+        <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent-purple);">On-Demand</div>
+        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem;">Obsidian drag & drop + direct paste.</p>
       </div>
 
       <div class="card">
@@ -137,7 +351,7 @@
           </div>
           <div class="hub-card-title">🎬 1. Research & Master Studio</div>
           <p class="hub-card-desc">
-            Second-by-second reference video analysis, <strong>manually triggered Second Brain vault search & note injection</strong>, vertical shot cards, and direct video uploader.
+            Second-by-second reference video analysis, <strong>Second Brain manual Obsidian file upload & paste</strong>, vertical shot cards, and direct video uploader.
           </p>
         </div>
         <div>
