@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timeline Sequencer — August Video Animation #2</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .timeline-canvas-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+    }
+    .ruler-track {
+      display: flex;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      min-width: 1200px;
+    }
+    .ruler-mark {
+      flex: 1;
+      border-left: 1px solid var(--border-color);
+      padding-left: 4px;
+      height: 16px;
+    }
+    .track-lane {
+      min-width: 1200px;
+      margin-bottom: 1rem;
+    }
+    .track-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .track-blocks {
+      display: flex;
+      gap: 4px;
+      height: 60px;
+      background: var(--bg-surface-elevated);
+      border-radius: var(--radius-sm);
+      padding: 4px;
+      position: relative;
+    }
+    .timeline-block {
+      border-radius: 4px;
+      padding: 6px 8px;
+      font-size: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #fff;
+      cursor: pointer;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      transition: transform 0.15s ease, filter 0.15s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .timeline-block:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.15);
+      z-index: 10;
+    }
+    .waveform-visual {
+      height: 40px;
+      background: repeating-linear-gradient(90deg, var(--accent-green) 0, var(--accent-green) 2px, transparent 2px, transparent 6px);
+      opacity: 0.7;
+      border-radius: 4px;
+      min-width: 1200px;
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header"></header>
+
+  <main class="app-container">
+    <div class="view-header">
+      <div class="view-title-group">
+        <h1>⏱️ Visual Timeline Sequencer & Scrubber</h1>
+        <p>Gantt-style horizontal timeline mapping scenes 1–6, shot duration blocks, and multitrack audio alignment.</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-primary" id="btn-play-all">▶️ Play Full Sequence</button>
+        <button class="btn" id="btn-stop-all">⏹️ Stop</button>
+      </div>
+    </div>
+
+    <!-- Timeline Sequencer Canvas -->
+    <div class="timeline-canvas-container">
+      <!-- Time Ruler -->
+      <div class="ruler-track" id="time-ruler">
+        <div class="ruler-mark">0:00 (Hook)</div>
+        <div class="ruler-mark">0:30 (Problem)</div>
+        <div class="ruler-mark">1:00 (Reverse Engine)</div>
+        <div class="ruler-mark">1:30 (Workbench)</div>
+        <div class="ruler-mark">2:00 (Live Sync)</div>
+        <div class="ruler-mark">2:30 (Retention)</div>
+        <div class="ruler-mark">3:00 (Roger Rabbit Outro)</div>
+      </div>
+
+      <!-- Track 1: Scene Macro Blocks -->
+      <div class="track-lane">
+        <div class="track-title">🎬 SCENE BLOCKS (MACRO NARRATIVE ARC)</div>
+        <div class="track-blocks" id="scene-blocks-track" style="height: 48px;"></div>
+      </div>
+
+      <!-- Track 2: Shot Detail Blocks (Video Flow & Stills) -->
+      <div class="track-lane">
+        <div class="track-title">🎥 SHOT BEATS & FLOW ANIMATIONS</div>
+        <div class="track-blocks" id="shot-blocks-track" style="height: 64px;"></div>
+      </div>
+
+      <!-- Track 3: Voiceover & Audio Waveform -->
+      <div class="track-lane">
+        <div class="track-title">🎙️ VOICEOVER SYNTHESIS TRACK (140 WPM CADENCE)</div>
+        <div class="waveform-visual"></div>
+      </div>
+    </div>
+
+    <!-- Selected Beat Inspector -->
+    <div class="card" id="timeline-inspector">
+      <div class="card-header">
+        <span class="card-title" id="insp-title">🔍 Selected Timeline Node: Scene 1, Shot 1</span>
+        <span class="badge badge-blue" id="insp-badge">Duration: 5.0s</span>
+      </div>
+      <div class="grid-3">
+        <div>
+          <label class="form-label">Voiceover Spoken Line</label>
+          <p id="insp-vo" style="font-size: 0.95rem; font-weight: 500;">"I was drowning in 46,000 notes across Obsidian."</p>
+        </div>
+        <div>
+          <label class="form-label">Visual Direction & Asset</label>
+          <p id="insp-visual" style="color: var(--text-secondary);">Chaotic workspace, glowing Obsidian core, file storm.</p>
+        </div>
+        <div>
+          <label class="form-label">Pacing & Speed Calibration</label>
+          <button class="btn btn-sm btn-purple" id="btn-insp-speak">🎙️ Preview Audio</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    let activeInspection = null;
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      studio.injectHeaderAndFooter("timeline");
+      const state = await studio.loadState();
+      renderTimeline(state);
+
+      document.getElementById("btn-play-all").addEventListener("click", () => {
+        const lines = [];
+        state.scenes.forEach(s => s.shots.forEach(sh => {
+          if (sh.voiceover) lines.push(sh.voiceover);
+        }));
+        studio.speakVoiceover(lines.join(" ... "));
+      });
+
+      document.getElementById("btn-stop-all").addEventListener("click", () => {
+        studio.stopVoiceover();
+      });
+
+      document.getElementById("btn-insp-speak").addEventListener("click", () => {
+        if (activeInspection && activeInspection.voiceover) {
+          studio.speakVoiceover(activeInspection.voiceover);
+        }
+      });
+    });
+
+    function renderTimeline(state) {
+      const sceneTrack = document.getElementById("scene-blocks-track");
+      const shotTrack = document.getElementById("shot-blocks-track");
+
+      let totalDuration = 0;
+      state.scenes.forEach(sc => {
+        totalDuration += (sc.durationSeconds || 30);
+      });
+      if (totalDuration === 0) totalDuration = 180;
+
+      // Render Scene Macro Blocks
+      sceneTrack.innerHTML = state.scenes.map(s => {
+        const pct = ((s.durationSeconds || 30) / totalDuration) * 100;
+        return `
+          <div class="timeline-block" style="flex: ${pct}; background: ${s.color || 'var(--accent-blue)'}; opacity: 0.9;" title="${s.title}">
+            <strong>Scene ${s.number}: ${s.title}</strong>
+            <span style="font-size: 0.7rem; opacity: 0.8;">${s.timecodeStart || '0:00'} - ${s.timecodeEnd || ''}</span>
+          </div>
+        `;
+      }).join("");
+
+      // Render Shot Detail Blocks
+      let shotHtml = "";
+      state.scenes.forEach(s => {
+        (s.shots || []).forEach(sh => {
+          const shotDur = sh.duration || 5.0;
+          shotHtml += `
+            <div class="timeline-block" onclick="inspectShot('${sh.id}')" style="flex: ${shotDur}; background: ${s.color || 'var(--accent-blue)'};" title="${sh.voiceover}">
+              <strong>Shot ${s.number}.${sh.shotNumber} (${shotDur}s)</strong>
+              <span style="font-size: 0.68rem; opacity: 0.9; overflow: hidden; text-overflow: ellipsis;">${sh.voiceover || ''}</span>
+            </div>
+          `;
+        });
+      });
+      shotTrack.innerHTML = shotHtml;
+
+      // Default inspector
+      if (state.scenes.length && state.scenes[0].shots.length) {
+        inspectShot(state.scenes[0].shots[0].id);
+      }
+    }
+
+    window.inspectShot = (shotId) => {
+      for (const scene of studio.state.scenes) {
+        for (const shot of scene.shots) {
+          if (shot.id === shotId) {
+            activeInspection = shot;
+            document.getElementById("insp-title").textContent = `🔍 Scene ${scene.number} Shot ${shot.shotNumber}: ${scene.title}`;
+            document.getElementById("insp-badge").textContent = `Duration: ${shot.duration}s • Status: ${shot.status}`;
+            document.getElementById("insp-vo").textContent = `"${shot.voiceover || 'No voiceover text'}"`;
+            document.getElementById("insp-visual").textContent = `${shot.visualNotes || 'Visual direction'}`;
+            return;
+          }
+        }
+      }
+    };
+  </script>
+</body>
+</html>

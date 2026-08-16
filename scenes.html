@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scene Breakdown & Structure — August Video Animation #2</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header"></header>
+
+  <main class="app-container">
+    <div class="view-header">
+      <div class="view-title-group">
+        <h1>📑 Scene Structural Architecture (6 Main Scenes)</h1>
+        <p>Macro narrative structure, target word counts, duration envelopes, and color theme taxonomy.</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-primary" id="btn-save-scenes">💾 Save Narrative Changes</button>
+      </div>
+    </div>
+
+    <!-- Scenes 1 through 6 Cards Grid -->
+    <div class="grid-2" id="scenes-container">
+      <!-- Rendered by JS -->
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      studio.injectHeaderAndFooter("scenes");
+      const state = await studio.loadState();
+      renderScenes(state);
+
+      document.getElementById("btn-save-scenes").addEventListener("click", () => {
+        studio.syncToCloud();
+      });
+    });
+
+    function renderScenes(state) {
+      const container = document.getElementById("scenes-container");
+      container.innerHTML = (state.scenes || []).map((scene, idx) => {
+        let currentWords = 0;
+        (scene.shots || []).forEach(sh => {
+          currentWords += (sh.voiceover || "").split(/\s+/).filter(Boolean).length;
+        });
+        const targetWords = scene.targetWordCount || 75;
+        const pct = Math.min(100, Math.round((currentWords / targetWords) * 100));
+
+        return `
+          <div class="card" style="border-top: 4px solid ${scene.color || 'var(--accent-blue)'};">
+            <div class="card-header">
+              <span class="card-title">
+                <span style="display:inline-block; width:12px; height:12px; border-radius:50%; background:${scene.color};"></span>
+                Scene ${scene.number}: ${scene.title}
+              </span>
+              <span class="badge badge-blue">${scene.timecodeStart || '0:00'} - ${scene.timecodeEnd || '0:30'}</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Scene Title</label>
+              <input type="text" class="form-input" value="${scene.title}" onchange="updateSceneField(${idx}, 'title', this.value)">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Narrative Objective & Description</label>
+              <textarea class="form-textarea" rows="2" onchange="updateSceneField(${idx}, 'description', this.value)">${scene.description || ''}</textarea>
+            </div>
+
+            <div class="grid-2" style="margin-bottom: 1rem;">
+              <div>
+                <label class="form-label">Target Words / Actual</label>
+                <div style="font-size: 1.1rem; font-weight: 700;">
+                  ${currentWords} / <span style="color:var(--text-muted);">${targetWords} wds</span>
+                </div>
+                <div style="height: 6px; background: var(--bg-surface-elevated); border-radius: 999px; overflow: hidden; margin-top: 4px;">
+                  <div style="width: ${pct}%; height: 100%; background: ${scene.color};"></div>
+                </div>
+              </div>
+
+              <div>
+                <label class="form-label">Duration (Seconds)</label>
+                <input type="number" class="form-input" value="${scene.durationSeconds || 30}" onchange="updateSceneField(${idx}, 'durationSeconds', parseInt(this.value))">
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-secondary); padding-top: 0.5rem; border-top: 1px solid var(--border-color);">
+              <span>${(scene.shots || []).length} Shot Beats</span>
+              <a href="research.html" style="color: var(--accent-blue); text-decoration: none;">Edit Shots in Studio →</a>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    window.updateSceneField = (idx, field, value) => {
+      if (studio.state.scenes[idx]) {
+        studio.state.scenes[idx][field] = value;
+        studio.saveLocalState();
+      }
+    };
+  </script>
+</body>
+</html>

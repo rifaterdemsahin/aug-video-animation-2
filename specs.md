@@ -453,47 +453,60 @@ Automated pipeline that extracts text from Canva slide deck images using OCR/vis
 
 ## 8. Deployment & Containerization Specification
 
-### 8.1. Docker Configuration (`Dockerfile`)
-```dockerfile
-FROM python:3.11-slim
+### 8.1. Dual Deployment Strategy Architecture
+The application is engineered with a dual deployment architecture:
+1. **GitHub Pages (Serverless Static Mode)**: Instant zero-cost distribution for the frontend studio workbench, reading local assets and using browser `localStorage` with Web Speech API audio synthesis.
+2. **Fly.io (Full-Stack Container Mode)**: Production containerized Python server running in the London (`lhr`) region with full REST APIs, live Azure HMAC-SHA256 cloud sync, OpenRouter LLM integration, and direct media upload support.
 
-WORKDIR /app
-COPY . /app
-
-ENV PYTHONUNBUFFERED=1
-ENV HOST=0.0.0.0
-ENV PORT=8080
-
-EXPOSE 8080
-
-CMD ["python3", "server.py", "--host", "0.0.0.0", "--port", "8080"]
+```
+                  +--------------------------------------------------+
+                  |               DEVELOPER GIT PUSH                 |
+                  +-------------------------+------------------------+
+                                            |
+                    +-----------------------+-----------------------+
+                    |                                               |
+                    v                                               v
+  +------------------------------------+   +------------------------------------+
+  | .github/workflows/deploy-pages.yml |   |  .github/workflows/deploy-fly.yml  |
+  +-----------------+------------------+   +-----------------+------------------+
+                    |                                        |
+                    v                                        v
+  +------------------------------------+   +------------------------------------+
+  |            GITHUB PAGES            |   |               FLY.IO               |
+  |     - Static Studio Workbench      |   |   - Python 3.11 ThreadingHTTPServer|
+  |     - Client localStorage Engine   |   |   - Azure HMAC-SHA256 Cloud Sync   |
+  |     - Web Speech API TTS           |   |   - OpenRouter AI & Media Uploads  |
+  |     - .nojekyll Enabled            |   |   - Docker Container Port 8080     |
+  +------------------------------------+   +------------------------------------+
 ```
 
-### 8.2. Fly.io Configuration (`fly.toml`)
-```toml
-app = "aug-video-animation-1"
-primary_region = "lhr"
+### 8.2. GitHub Pages Deployment Specification
+- **Configuration & Bypass**: An empty `.nojekyll` file sits at the repository root to bypass Jekyll markdown preprocessing.
+- **Workflow File**: `.github/workflows/deploy-pages.yml`
+- **Permissions**: `contents: read`, `pages: write`, `id-token: write`.
+- **Workflow Action Sequence**:
+  1. Check out repository code.
+  2. Run `python3 generate_assets.py` to ensure all SVGs and manifest images are populated.
+  3. Package and upload pages artifact via `actions/upload-pages-artifact@v3`.
+  4. Deploy to GitHub Pages environment via `actions/deploy-pages@v4`.
+- **Client Offline Mode**: When running on GitHub Pages without a backend, `app.js` gracefully operates via `localStorage`, disabling cloud calls while retaining full storyboard, prompter, timeline, and audio playback capabilities.
 
-[build]
-  dockerfile = "Dockerfile"
-
-[http_service]
-  internal_port = 8080
-  force_https = true
-  auto_stop_machines = "stop"
-  auto_start_machines = true
-  min_machines_running = 1
-  processes = ["app"]
-
-[[vm]]
-  size = "shared-cpu-1x"
-  memory = "512mb"
-  cpus = 1
-```
-
-### 8.3. GitHub Pages Static Deployment (`.nojekyll`)
-- Place an empty `.nojekyll` file in the repository root.
-- The static frontend (`index.html`, `research.html`, etc.) operates directly via GitHub Pages using `localStorage`.
+### 8.3. Fly.io Deployment Specification
+- **Application Manifest (`fly.toml`)**:
+  - `app = "aug-video-animation-2"`
+  - `primary_region = "lhr"`
+  - `internal_port = 8080`
+  - `auto_stop_machines = "stop"`, `min_machines_running = 1`
+  - Resource VM: `shared-cpu-1x`, `512mb` memory.
+- **Production Container (`Dockerfile`)**:
+  - Base Image: `python:3.11-slim`
+  - Working Directory: `/app`
+  - Command: `python3 server.py --host 0.0.0.0 --port 8080`
+  - Exposes port `8080`.
+- **CI/CD Workflow (`.github/workflows/deploy-fly.yml`)**:
+  - Triggers on push to `main` or `master`.
+  - Installs `flyctl` via `superfly/flyctl-actions/setup-flyctl@master`.
+  - Deploys container with `flyctl deploy --remote-only` using secret `FLY_API_TOKEN`.
 
 ---
 
@@ -503,42 +516,49 @@ To reproduce this entire repository from zero:
 
 1. **Initialize Workspace & Directory Structure**:
    ```bash
-   mkdir aug-video-animation-1 && cd aug-video-animation-1
+   mkdir aug-video-animation-2 && cd aug-video-animation-2
    git init
    mkdir -p stills/{00_index,01_architecture,02_plan,03_assets,04_cohort,05_gaps,06_assembly,07_polish,08_refinement,09_audio,10_editcolor,11_thumbnail,12_export,13_metadata,15_tactics}
-   mkdir -p video_flow/_first_frames 3_Simulation/rawexport
+   mkdir -p video_flow/_first_frames 3_Simulation/rawexport uploads .github/workflows
    touch .nojekyll
    ```
 
-2. **Populate Media Manifests**:
+2. **Populate Media Manifests & Assets**:
    - Create `stills/images_manifest.json` mapping all slide stills to stages `00` through `15`.
    - Create `video_flow/video_flow_manifest.json` indexing the 26 Flow video clips and their poster images.
+   - Run `python3 generate_assets.py` to render all SVG visuals.
 
 3. **Implement Backend Server (`server.py`)**:
    - Implement the `ThreadingHTTPServer` with custom `SimpleHTTPRequestHandler`.
    - Implement the HMAC-SHA256 Azure Blob client and Key Vault resolver.
-   - Implement API routes: `/api/health`, `/api/state`, `/api/state/list`, `/api/vault-search`, `/api/text`, `/api/ai/tts`.
+   - Implement API routes: `/api/health`, `/api/state`, `/api/state/list`, `/api/vault-search`, `/api/text`, `/api/ai/tts`, `/api/upload`.
 
-4. **Implement Frontend Web Views**:
-   - Build the shared CSS design system with CSS custom properties and dark/light theme toggle.
+4. **Implement Frontend Web Views & Design System**:
+   - Build `style.css` and `app.js` with dark/light theme switcher and Roger Rabbit signature footer.
    - Implement the 10 web views (`index.html`, `research.html`, `timeline.html`, `shotlist.html`, `scenes.html`, `voice_over.html`, `script_guru.html`, `gallery.html`, `tactic.html`, `analysis.html`).
 
 5. **Implement Auxiliary Video Pipelines**:
    - Create `split_large_videos.py` and `rejoin_large_videos.py` for large video handling.
    - Create `extract_and_rewrite_vo.py` for automated script processing.
 
-6. **Configure Containerization & Cloud Deployment**:
-   - Create `Dockerfile` and `fly.toml`.
-   - Test locally with `python3 server.py` on `http://127.0.0.1:8765`.
+6. **Configure CI/CD & Deployments**:
+   - Add `.github/workflows/deploy-pages.yml` for automated GitHub Pages static releases.
+   - Add `Dockerfile`, `fly.toml`, and `.github/workflows/deploy-fly.yml` for Fly.io container deployments.
+   - Test locally with `python3 server.py --port 8765`.
 
-## 10. Reverse Reponse Video
-- A popular video that is selected. Would be mentioned here. I should place the video in this project
-- Would be added to the research by every second
-- We would use our second brain to relate to our experience
-- We would also upload our content as well there needs to be upload feature in the research
+---
 
-## 11. Signature
-- There would be roger rabit style signature at the end with Rifat Erdem Sahin
+## 10. Reverse Response Video Specification
+- **Reference Video Benchmark**: A high-retention tech explainer video is chosen as the structural anchor.
+- **Second-by-Second Research Mapping**: In `research.html`, the video is broken down second-by-second (0:00 Hook, 0:30 Problem, 1:00 Reverse Architecture, 1:30 Workbench, 2:00 Live Sync, 2:30 Retention, 3:00 Outro).
+- **Second Brain Knowledge Connection**: Uses `/api/vault-search` to query local Obsidian notes and embed insights directly into script beats.
+- **Multimedia Asset Upload**: Direct file/video uploader via `/api/upload` storing files in `uploads/` for direct reference in the storyboard.
+
+---
+
+## 11. Signature Outro
+- All views feature a dynamic **Roger Rabbit style hand-drawn cartoon signature** for **Rifat Erdem Sahin** (`.roger-rabbit-signature`) with animated cartoon stars and gradient typography.
 
 ---
 *End of Specification Document.*
+

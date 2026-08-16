@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0e14" />
+      <stop offset="100%" stop-color="#161b26" />
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <circle cx="960" cy="540" r="420" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="2"/>
+  <circle cx="960" cy="540" r="280" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2" stroke-dasharray="12 8"/>
+  <rect x="120" y="100" width="1680" height="880" rx="24" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+  
+  <!-- Top Badge -->
+  <rect x="160" y="140" width="280" height="44" rx="8" fill="rgba(255,255,255,0.06)" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="300" y="168" fill="#8b5cf6" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="20" font-weight="700" text-anchor="middle" letter-spacing="1">FLOW CLIP 26 // SCENE 6</text>
+  
+  <!-- Icon & Main Visual -->
+  <circle cx="960" cy="460" r="90" fill="url(#glow)"/>
+  <text x="960" y="490" font-size="72" text-anchor="middle">🎥</text>
+  
+  <!-- Title & Subtitle -->
+  <text x="960" y="650" fill="#f0f3f8" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="44" font-weight="800" text-anchor="middle">Clip #26: DeliveryPilot Call to Action</text>
+  <text x="960" y="715" fill="#9ba3b4" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="26" font-weight="400" text-anchor="middle">Duration: 5.0s • Slug: system-closing-call-to-action</text>
+  
+  <!-- Footer Brand -->
+  <line x1="200" y1="900" x2="1720" y2="900" stroke="rgba(255,255,255,0.06)" stroke-width="2"/>
+  <text x="200" y="935" fill="#626a7e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="20">AUG VIDEO ANIMATION #2 • PRODUCTION WORKBENCH</text>
+  <text x="1720" y="935" fill="#3b82f6" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="20" font-weight="600" text-anchor="end">DELIVERYPILOT / RIFAT ERDEM SAHIN</text>
+</svg>

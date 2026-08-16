@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Production Tactics & SOPs — August Video Animation #2</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header"></header>
+
+  <main class="app-container">
+    <div class="view-header">
+      <div class="view-title-group">
+        <h1>⚔️ Production Tactics, SOPs & Quality Gates</h1>
+        <p>Standard Operating Procedures, DaVinci Resolve render parameters, Git large-media handling, and release checklist.</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-primary" id="btn-save-sop">💾 Save Checklist State</button>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- Left Column: SOPs & DaVinci Resolve Settings -->
+      <div>
+        <div class="card" style="margin-bottom: 1.25rem;">
+          <div class="card-header">
+            <span class="card-title">🎬 Stage 12 Export & DaVinci Resolve Settings</span>
+            <span class="badge badge-purple">4K Master Preset</span>
+          </div>
+          <table style="width: 100%; font-size: 0.85rem; border-collapse: collapse; line-height: 1.8;">
+            <tr><td style="color: var(--text-secondary); width: 140px;">Timeline Resolution:</td><td><strong>3840 x 2160 (4K UHD)</strong> or 1920x1080 (Vertical Shorts)</td></tr>
+            <tr><td style="color: var(--text-secondary);">Frame Rate:</td><td><strong>60.0 fps (Cinematic Smooth Motion)</strong></td></tr>
+            <tr><td style="color: var(--text-secondary);">Video Codec:</td><td><strong>Apple ProRes 422 HQ / H.264 High Profile</strong></td></tr>
+            <tr><td style="color: var(--text-secondary);">Color Space:</td><td><strong>Rec.709 / Gamma 2.4</strong></td></tr>
+            <tr><td style="color: var(--text-secondary);">Audio Target:</td><td><strong>-14.0 LUFS Integrated (YouTube Spec)</strong></td></tr>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📦 Large Video Chunking Pipeline (Git-Compliant)</span>
+            <span class="badge badge-blue">Max 24MB Chunks</span>
+          </div>
+          <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.75rem;">
+            When master files exceed GitHub's 25MB push limit, run standard Python automation scripts:
+          </p>
+          <div style="background: var(--bg-surface-elevated); padding: 0.75rem; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 0.75rem;">
+            # 1. Split master into 24MB parts<br>
+            python3 split_large_videos.py 3_Simulation/rawexport/master.mp4<br><br>
+            # 2. Rejoin on target machine<br>
+            python3 rejoin_large_videos.py
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.75rem;">
+            Uses SHA-256 binary validation to guarantee bit-exact reconstructed masters.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive SOP Quality Checklist -->
+      <div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">✅ Production Quality Gates Checklist</span>
+            <span class="badge badge-green" id="sop-progress-badge">4 / 7 Complete</span>
+          </div>
+
+          <div id="sop-items-list" style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer;">
+              <input type="checkbox" id="chk-1" checked style="margin-top: 3px;">
+              <div>
+                <strong>1. Reverse Response Reference Video Analysis</strong>
+                <div style="color: var(--text-secondary); font-size: 0.8rem;">Benchmark video analyzed second-by-second and mapped in Research Studio.</div>
+              </div>
+            </label>
+
+            <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer;">
+              <input type="checkbox" id="chk-2" checked style="margin-top: 3px;">
+              <div>
+                <strong>2. Second Brain Knowledge Linking</strong>
+                <div style="color: var(--text-secondary); font-size: 0.8rem;">Obsidian vault query terms verified and connected to script beats.</div>
+              </div>
+            </label>
+
+            <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer;">
+              <input type="checkbox" id="chk-3" checked style="margin-top: 3px;">
+              <div>
+                <strong>3. Voiceover Pacing Guardrail (140 WPM)</strong>
+                <div style="color: var(--text-secondary); font-size: 0.8rem;">All scene word counts calibrated under target threshold via Script Guru.</div>
+              </div>
+            </label>
+
+            <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer;">
+              <input type="checkbox" id="chk-4" checked style="margin-top: 3px;">
+              <div>
+                <strong>4. 26 Google Flow Clips Synced</strong>
+                <div style="color: var(--text-secondary); font-size: 0.8rem;">All 26 Flow animations assigned to respective storyboard timeline blocks.</div>
+              </div>
+            </label>
+
+            <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer;">
+              <input type="checkbox" id="chk-5" style="margin-top: 3px;">
+              <div>
+                <strong>5. Audio Mastering & High-Pass Filter</strong>
+                <div style="color: var(--text-secondary); font-size: 0.8rem;">Voiceover EQ curve adjusted; room resonance reduced at 80Hz.</div>
+              </div>
+            </label>
+
+            <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer;">
+              <input type="checkbox" id="chk-6" style="margin-top: 3px;">
+              <div>
+                <strong>6. Roger Rabbit Animated Signature Verified</strong>
+                <div style="color: var(--text-secondary); font-size: 0.8rem;">Outro signoff animation rendered with Rifat Erdem Sahin stamp.</div>
+              </div>
+            </label>
+
+            <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer;">
+              <input type="checkbox" id="chk-7" style="margin-top: 3px;">
+              <div>
+                <strong>7. Cloud State & Snapshot Backup Dispatched</strong>
+                <div style="color: var(--text-secondary); font-size: 0.8rem;">Final state persisted to Azure Blob Storage and local snapshots.</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      studio.injectHeaderAndFooter("tactic");
+      await studio.loadState();
+
+      document.getElementById("btn-save-sop").addEventListener("click", () => {
+        studio.syncToCloud();
+        studio.toast("Production SOP checklist saved!", "success");
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>August Video Animation #2 — Reverse Response Production Studio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header"></header>
+
+  <main class="app-container">
+    <div class="view-header">
+      <div class="view-title-group">
+        <h1>⚡ Reverse Response Video Studio</h1>
+        <p>End-to-end multimedia production workbench: Reverse engineering viral response formats with your Second Brain.</p>
+      </div>
+      <div class="header-actions">
+        <a href="research.html" class="btn btn-primary">Open Master Studio 🎬</a>
+        <a href="timeline.html" class="btn btn-purple">Sequencer Timeline ⏱️</a>
+      </div>
+    </div>
+
+    <!-- Quick Stats Grid -->
+    <div class="grid-4" style="margin-bottom: 2rem;">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🎥 Video Flow Clips</span>
+          <span class="badge badge-purple">26 / 26 Active</span>
+        </div>
+        <div style="font-size: 2rem; font-weight: 800; color: var(--accent-purple);">26 Clips</div>
+        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem;">AI Google Flow animated scenes with poster frames.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🖼️ Production Stills</span>
+          <span class="badge badge-blue">16 Stages</span>
+        </div>
+        <div style="font-size: 2rem; font-weight: 800; color: var(--accent-blue);" id="stat-stills-count">18 Assets</div>
+        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem;">Stage 00 (Index) through Stage 15 (Tactics) slide manifests.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🎙️ Target Spoken Pace</span>
+          <span class="badge badge-green">Optimal</span>
+        </div>
+        <div style="font-size: 2rem; font-weight: 800; color: var(--accent-green);">140 WPM</div>
+        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem;">Calibrated for maximum YouTube engagement and retention.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">☁️ Persistence & Snapshots</span>
+          <span class="badge badge-gold" id="stat-sync-status">Local & Azure</span>
+        </div>
+        <div style="font-size: 2rem; font-weight: 800; color: var(--accent-gold);">HMAC-SHA256</div>
+        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem;">Automatic snapshot backups & offline-first browser storage.</p>
+      </div>
+    </div>
+
+    <!-- Section 10: Reverse Response Video Spotlight -->
+    <div class="card" style="margin-bottom: 2rem; background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-surface-elevated) 100%);">
+      <div class="card-header">
+        <span class="card-title">🎯 Section 10: Selected Reverse Response Reference Video</span>
+        <span class="badge badge-red">Viral Breakdown Anchor</span>
+      </div>
+      <div class="grid-2">
+        <div>
+          <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem;">Reverse Engineering Concept</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+            A reverse response video analyzes a proven, high-performing video structure second-by-second and re-fits it to our specific niche (Obsidian Second Brain, AI Agents, and Automated Workflows).
+          </p>
+          <ul style="color: var(--text-secondary); padding-left: 1.25rem; margin-bottom: 1.5rem; line-height: 1.8;">
+            <li><strong>Second-by-Second Breakdown:</strong> Every hook, retention drop-off gate, and transition mapped in <a href="research.html" style="color: var(--accent-blue);">Master Research Studio</a>.</li>
+            <li><strong>Second Brain Relational Linking:</strong> Connect your personal Obsidian vault thoughts directly to script beats.</li>
+            <li><strong>Direct Asset & Video Upload:</strong> Upload raw reference clips, B-roll, and audio directly into the project repository.</li>
+          </ul>
+          <div style="display: flex; gap: 0.75rem;">
+            <a href="research.html" class="btn btn-primary">Launch Research & Upload 📤</a>
+            <a href="script_guru.html" class="btn">Analyze Script Retention 🧠</a>
+          </div>
+        </div>
+        <div style="background: rgba(0,0,0,0.3); border-radius: var(--radius-md); padding: 1rem; border: 1px dashed var(--border-color); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+          <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎬</div>
+          <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Reference Video Multi-Track Player</h4>
+          <p style="color: var(--text-muted); font-size: 0.85rem; max-width: 320px; margin-bottom: 1rem;">
+            Load reference MP4 or connect YouTube timestamped nodes to synchronize pacing with your live shotlist.
+          </p>
+          <a href="research.html" class="btn btn-sm btn-purple">Open Video Sync Workbench</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 16-Stage Pipeline Catalog Overview -->
+    <h2 style="font-size: 1.3rem; margin-bottom: 1rem;">16-Stage Video Production Pipeline</h2>
+    <div class="grid-16" id="pipeline-stages-grid">
+      <!-- Generated via JS -->
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      studio.injectHeaderAndFooter("index");
+      await studio.loadState();
+
+      const stages = [
+        { id: "00", name: "Index", icon: "📑", desc: "Framework topology and master blueprint" },
+        { id: "01", name: "Architecture", icon: "🏗️", desc: "Full-stack system and cloud infrastructure" },
+        { id: "02", name: "Plan", icon: "📝", desc: "Script deck slides & 20-beat narrative" },
+        { id: "03", name: "Assets", icon: "🗂️", desc: "Obsidian notes and vault entity counts" },
+        { id: "04", name: "Cohort", icon: "👥", desc: "Audience insights and community feedback" },
+        { id: "05", name: "Gaps", icon: "🧩", desc: "Concept gap analysis and mind mapping" },
+        { id: "06", name: "Assembly", icon: "🎬", desc: "Scene-by-scene storyboard synchronization" },
+        { id: "07", name: "Polish", icon: "✨", desc: "Kinetic micro-transitions and rhythm" },
+        { id: "08", name: "Refinement", icon: "🔍", desc: "Spoken cadence & WPM alignment checks" },
+        { id: "09", name: "Audio", icon: "🎙️", desc: "Voiceover mastering and EQ balance" },
+        { id: "10", name: "EditColor", icon: "🎨", desc: "Cinematic LUT profiles and color grading" },
+        { id: "11", name: "Thumbnail", icon: "🖼️", desc: "A/B high CTR thumbnail compositions" },
+        { id: "12", name: "Export", icon: "🚀", desc: "4K ProRes / 1080p 60fps render settings" },
+        { id: "13", name: "Metadata", icon: "🏷️", desc: "YouTube SEO chapters and tags" },
+        { id: "14", name: "Large Media", icon: "📦", desc: "24MB binary chunk splitting & rejoining" },
+        { id: "15", name: "Tactics", icon: "⚔️", desc: "Standard operating procedures & quality gates" }
+      ];
+
+      const container = document.getElementById("pipeline-stages-grid");
+      container.innerHTML = stages.map(s => `
+        <div class="card" style="padding: 1rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+            <span style="font-size: 1.5rem;">${s.icon}</span>
+            <span class="badge badge-blue">Stage ${s.id}</span>
+          </div>
+          <h4 style="font-weight: 700; margin-bottom: 0.25rem;">${s.name}</h4>
+          <p style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 0.75rem;">${s.desc}</p>
+          <a href="gallery.html?stage=${s.id}" class="btn btn-sm" style="width: 100%;">View Stage Assets</a>
+        </div>
+      `).join("");
+    });
+  </script>
+</body>
+</html>

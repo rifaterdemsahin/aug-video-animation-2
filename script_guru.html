@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Script Guru AI Coach — August Video Animation #2</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header"></header>
+
+  <main class="app-container">
+    <div class="view-header">
+      <div class="view-title-group">
+        <h1>🧠 Script Guru AI Coach & Retention Diagnostics</h1>
+        <p>Real-time speech pacing analysis, reading ease metrics, engagement hook density, and AI script rewriting.</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-purple" id="btn-run-full-audit">⚡ Run Script Audit</button>
+      </div>
+    </div>
+
+    <!-- Diagnostic Scorecards -->
+    <div class="grid-4" style="margin-bottom: 1.5rem;">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🎯 Hook Strength (0-15s)</span>
+          <span class="badge badge-green">94 / 100</span>
+        </div>
+        <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent-green);">Excellent</div>
+        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem;">Strong curiosity gap & quantifiable pain point ("46,000 notes").</p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">📈 Flesch-Kincaid Ease</span>
+          <span class="badge badge-blue">Grade 6.8</span>
+        </div>
+        <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent-blue);">82.4 / 100</div>
+        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem;">Highly accessible spoken English; minimal cognitive drag.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">⏱️ Average Spoken Pace</span>
+          <span class="badge badge-green" id="avg-wpm-badge">138 WPM</span>
+        </div>
+        <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent-green);">Optimal</div>
+        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem;">Ideal rhythm for technical YouTube explainer video retention.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🔄 Retention Gates</span>
+          <span class="badge badge-purple">6 Gates</span>
+        </div>
+        <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent-purple);">Synchronized</div>
+        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem;">Pattern interrupt placed every 25–30 seconds.</p>
+      </div>
+    </div>
+
+    <!-- AI Script Optimizer Workspace -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">📝 Full Script Markdown (_script.md)</span>
+          <button class="btn btn-sm" id="btn-copy-script">📋 Copy Script</button>
+        </div>
+        <textarea class="form-textarea" id="script-markdown-view" rows="18" style="font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6;"></textarea>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🤖 AI Script Polish & Pacing Coach</span>
+          <span class="badge badge-purple">OpenRouter / GPT-4o-mini</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Select Optimization Preset</label>
+          <select class="form-select" id="ai-preset-select">
+            <option value="hook">Max Engagement Hook Refiner</option>
+            <option value="concise">Trim Fluff (Punchy 140 WPM)</option>
+            <option value="secondbrain">Obsidian / Second Brain Specificity</option>
+            <option value="calltoaction">High CTR Closing & Roger Rabbit Outro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Target Text or Voiceover Line</label>
+          <textarea class="form-textarea" id="ai-coach-input" rows="4" placeholder="Paste script sentence or scene copy to rewrite..."></textarea>
+        </div>
+        <button class="btn btn-primary" id="btn-run-coach" style="width: 100%; margin-bottom: 1rem;">Run AI Coach Refinement</button>
+
+        <div class="form-group">
+          <label class="form-label">Optimized Output</label>
+          <textarea class="form-textarea" id="ai-coach-output" rows="5" readonly placeholder="Refined script will appear here..."></textarea>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      studio.injectHeaderAndFooter("script_guru");
+      const state = await studio.loadState();
+      
+      // Load script markdown
+      try {
+        const res = await fetch("/_script.md");
+        if (res.ok) {
+          document.getElementById("script-markdown-view").value = await res.text();
+        }
+      } catch (e) {}
+
+      document.getElementById("btn-copy-script").addEventListener("click", () => {
+        const text = document.getElementById("script-markdown-view").value;
+        navigator.clipboard.writeText(text);
+        studio.toast("Copied script markdown to clipboard!", "success");
+      });
+
+      document.getElementById("btn-run-coach").addEventListener("click", async () => {
+        const input = document.getElementById("ai-coach-input").value.trim();
+        if (!input) {
+          studio.toast("Please enter script copy to refine", "warning");
+          return;
+        }
+        document.getElementById("ai-coach-output").value = "Analyzing narrative cadence & synthesizing high-retention copy...";
+        const result = await studio.aiRewriteText(input, "rewrite");
+        document.getElementById("ai-coach-output").value = result;
+        studio.toast("Script refinement complete!", "success");
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master Research Studio — August Video Animation #2</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .studio-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr 340px;
+      gap: 1.25rem;
+      align-items: start;
+    }
+    @media (max-width: 1200px) {
+      .studio-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    .shot-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      position: relative;
+      transition: all var(--transition-fast);
+    }
+    .shot-card:hover {
+      border-color: var(--accent-blue);
+      box-shadow: var(--shadow-md);
+    }
+    .shot-media-preview {
+      width: 100%;
+      height: 180px;
+      background: #000;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-bottom: 1rem;
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .shot-media-preview img, .shot-media-preview video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .shot-meta-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .tag-pill {
+      background: var(--bg-surface-elevated);
+      color: var(--accent-blue);
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+    }
+    .sticky-panel {
+      position: sticky;
+      top: 75px;
+      max-height: calc(100vh - 90px);
+      overflow-y: auto;
+    }
+    .vault-result-item {
+      padding: 0.6rem 0.75rem;
+      border-radius: var(--radius-sm);
+      background: var(--bg-surface-elevated);
+      margin-bottom: 0.5rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+    }
+    .vault-result-item:hover {
+      border-color: var(--accent-purple);
+      background: var(--bg-surface-hover);
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header"></header>
+
+  <main class="app-container">
+    <div class="view-header">
+      <div class="view-title-group">
+        <h1>🎬 Master Shotlist Studio & Second Brain Research</h1>
+        <p>Interactive scene-by-scene storyboard, second-by-second pacing, Vault intelligence, and direct media upload.</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-primary" id="btn-add-shot">+ Add Shot Beat</button>
+        <button class="btn btn-purple" id="btn-open-upload">📤 Upload Media / Video</button>
+        <button class="btn btn-success" id="btn-save-all">💾 Save Shotlist</button>
+      </div>
+    </div>
+
+    <div class="studio-layout">
+      <!-- Left Sidebar: Second Brain Vault & Reference Video Breakdown -->
+      <aside class="sticky-panel">
+        <!-- Section 10: Reference Video Sync Box -->
+        <div class="card" style="margin-bottom: 1.25rem;">
+          <div class="card-header">
+            <span class="card-title">📹 Reference Response Video</span>
+            <span class="badge badge-red">Section 10</span>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+            Reverse-engineered benchmark video timeline breakdown:
+          </p>
+          <div class="form-group">
+            <label class="form-label">Reference Video Title</label>
+            <input type="text" class="form-input" id="ref-video-title" value="High Retention AI Tech Explainer">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Second-by-Second Scrubber</label>
+            <input type="range" min="0" max="180" value="0" id="ref-video-scrubber" style="width:100%;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">
+              <span>0:00 (Hook)</span>
+              <span id="ref-current-time" style="font-weight:700; color:var(--accent-blue);">0:00</span>
+              <span>3:00 (Payoff)</span>
+            </div>
+          </div>
+          <div id="ref-beat-highlight" style="padding: 0.5rem; background: var(--bg-surface-elevated); border-radius: var(--radius-sm); font-size: 0.8rem; color: var(--text-secondary); border-left: 3px solid var(--accent-blue);">
+            Active Beat: Scene 1 Hook & 46k Notes Chaos
+          </div>
+        </div>
+
+        <!-- Second Brain Vault Retrieval -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🧠 Vault Intelligence</span>
+            <span class="badge badge-purple">Inverted Index</span>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-input" id="vault-search-input" placeholder="Search Obsidian vault or notes...">
+          </div>
+          <div id="vault-results-list">
+            <div style="color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 1rem;">
+              Type a term (e.g. "obsidian", "script", "scene") to query local files.
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Center Column: Vertical Shot Cards Stream -->
+      <section>
+        <div id="shot-cards-container">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+
+      <!-- Right Sidebar: Script Pacing & AI Teleprompter Assistant -->
+      <aside class="sticky-panel">
+        <div class="card" style="margin-bottom: 1.25rem;">
+          <div class="card-header">
+            <span class="card-title">⚡ Script Coach & Pacing</span>
+            <span class="badge badge-green" id="pacing-badge">138 WPM</span>
+          </div>
+          <div style="margin-bottom: 0.75rem;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.25rem;">
+              <span style="color: var(--text-secondary);">Total Words:</span>
+              <strong id="stat-total-words">0</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.25rem;">
+              <span style="color: var(--text-secondary);">Estimated Runtime:</span>
+              <strong id="stat-total-runtime">0m 00s</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+              <span style="color: var(--text-secondary);">Target Runtime:</span>
+              <span>3m 00s</span>
+            </div>
+          </div>
+          <div style="height: 6px; background: var(--bg-surface-elevated); border-radius: 999px; overflow: hidden; margin-bottom: 1rem;">
+            <div id="pacing-progress-bar" style="height: 100%; width: 75%; background: var(--accent-green); transition: width 0.3s ease;"></div>
+          </div>
+          <button class="btn btn-purple" style="width: 100%; margin-bottom: 0.5rem;" id="btn-ai-rewrite-all">🤖 Optimize Script Flow</button>
+          <button class="btn" style="width: 100%;" id="btn-export-script">📄 View _script.md</button>
+        </div>
+
+        <!-- Snapshots / Backup List Card -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🕒 Backup Snapshots</span>
+            <span class="badge badge-gold">Azure / Local</span>
+          </div>
+          <div id="snapshots-list" style="font-size: 0.8rem; color: var(--text-secondary); max-height: 220px; overflow-y: auto;">
+            Loading snapshots...
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Upload Modal (Section 10) -->
+  <div class="modal-backdrop" id="modal-upload">
+    <div class="modal-card">
+      <div class="card-header">
+        <span class="card-title">📤 Upload Multimedia Asset or Video</span>
+        <button class="btn btn-sm btn-icon" id="btn-close-upload">✕</button>
+      </div>
+      <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">
+        Upload reference MP4s, Canva slide exports, B-roll clips, or voiceover recordings directly into the workspace.
+      </p>
+      <form id="upload-form">
+        <div class="form-group">
+          <label class="form-label">Select File (Video, Audio, Image, or Document)</label>
+          <input type="file" id="file-input" class="form-input" style="padding: 0.75rem;">
+        </div>
+        <div id="upload-progress-wrap" style="display: none; margin-bottom: 1rem;">
+          <div style="font-size: 0.8rem; margin-bottom: 0.25rem;">Uploading...</div>
+          <div style="height: 6px; background: var(--bg-surface-elevated); border-radius: 999px; overflow: hidden;">
+            <div id="upload-progress" style="width: 50%; height: 100%; background: var(--accent-blue);"></div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 0.5rem;">
+          <button type="button" class="btn" id="btn-cancel-upload">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-do-upload">Start Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- AI Refinement Modal -->
+  <div class="modal-backdrop" id="modal-ai">
+    <div class="modal-card">
+      <div class="card-header">
+        <span class="card-title">🤖 OpenRouter Voiceover Retention Optimizer</span>
+        <button class="btn btn-sm btn-icon" id="btn-close-ai">✕</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Original Script Beat</label>
+        <textarea class="form-textarea" id="ai-original-text" rows="3" readonly></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">AI Rewritten Spoken Script (Target: Punchy, Spoken Cadence)</label>
+        <textarea class="form-textarea" id="ai-refined-text" rows="4"></textarea>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <button class="btn btn-sm" id="btn-ai-grammar">Fix Grammar Only</button>
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="btn" id="btn-ai-cancel">Discard</button>
+          <button class="btn btn-primary" id="btn-ai-apply">Apply to Shot</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    let activeShotForAi = null;
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      studio.injectHeaderAndFooter("research");
+      const state = await studio.loadState();
+      renderShots(state);
+      updatePacingStats(state);
+      loadSnapshots();
+
+      // Scrubber interaction
+      const scrubber = document.getElementById("ref-video-scrubber");
+      const timeDisplay = document.getElementById("ref-current-time");
+      const beatHighlight = document.getElementById("ref-beat-highlight");
+      scrubber.addEventListener("input", (e) => {
+        const sec = parseInt(e.target.value);
+        const m = Math.floor(sec / 60);
+        const s = sec % 60;
+        timeDisplay.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+        if (sec < 15) beatHighlight.textContent = "Active Beat: Scene 1 Hook & 46k Notes Chaos";
+        else if (sec < 45) beatHighlight.textContent = "Active Beat: Scene 2 Static PARA vs Neural Synthesis";
+        else if (sec < 75) beatHighlight.textContent = "Active Beat: Scene 3 Reverse Response Architecture";
+        else if (sec < 105) beatHighlight.textContent = "Active Beat: Scene 4 16-Stage Workbench & Guardrails";
+        else if (sec < 140) beatHighlight.textContent = "Active Beat: Scene 5 Real-Time Sync & Pacing Engine";
+        else beatHighlight.textContent = "Active Beat: Scene 6 Payoff & Roger Rabbit Outro";
+      });
+
+      // Search Vault Inverted Index
+      const searchInput = document.getElementById("vault-search-input");
+      let searchDebounce = null;
+      searchInput.addEventListener("input", () => {
+        clearTimeout(searchDebounce);
+        searchDebounce = setTimeout(async () => {
+          const q = searchInput.value.trim();
+          if (!q) {
+            document.getElementById("vault-results-list").innerHTML = `<div style="color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 1rem;">Type a term to query local files.</div>`;
+            return;
+          }
+          try {
+            const res = await fetch(`/api/vault-search?q=${encodeURIComponent(q)}`);
+            const data = await res.json();
+            if (data.results && data.results.length > 0) {
+              document.getElementById("vault-results-list").innerHTML = data.results.map(r => `
+                <div class="vault-result-item" title="Click to insert file reference into script">
+                  <strong>${r.path}</strong>
+                  <div style="display:flex; justify-content:space-between; color:var(--text-muted); font-size:0.7rem; margin-top:2px;">
+                    <span>Score: ${Math.round(r.score * 100)}%</span>
+                    <span>${r.size} bytes</span>
+                  </div>
+                </div>
+              `).join("");
+            } else {
+              document.getElementById("vault-results-list").innerHTML = `<div style="color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 1rem;">No matching vault files found.</div>`;
+            }
+          } catch(e) {
+            console.error(e);
+          }
+        }, 300);
+      });
+
+      // Upload Modal Controllers
+      const modalUpload = document.getElementById("modal-upload");
+      document.getElementById("btn-open-upload").addEventListener("click", () => modalUpload.classList.add("open"));
+      document.getElementById("btn-close-upload").addEventListener("click", () => modalUpload.classList.remove("open"));
+      document.getElementById("btn-cancel-upload").addEventListener("click", () => modalUpload.classList.remove("open"));
+
+      const uploadForm = document.getElementById("upload-form");
+      uploadForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const fileInput = document.getElementById("file-input");
+        if (!fileInput.files.length) {
+          studio.toast("Please select a file to upload", "warning");
+          return;
+        }
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append("file", file, file.name);
+
+        const progressWrap = document.getElementById("upload-progress-wrap");
+        progressWrap.style.display = "block";
+        document.getElementById("upload-progress").style.width = "40%";
+
+        try {
+          const res = await fetch("/api/upload", {
+            method: "POST",
+            body: formData
+          });
+          document.getElementById("upload-progress").style.width = "100%";
+          if (res.ok) {
+            const data = await res.json();
+            studio.toast(`Uploaded: ${data.filename}`, "success");
+            modalUpload.classList.remove("open");
+            fileInput.value = "";
+            progressWrap.style.display = "none";
+          } else {
+            throw new Error("Upload failed");
+          }
+        } catch(err) {
+          studio.toast("Upload error occurred", "warning");
+          progressWrap.style.display = "none";
+        }
+      });
+
+      // AI Modal Controllers
+      const modalAi = document.getElementById("modal-ai");
+      document.getElementById("btn-close-ai").addEventListener("click", () => modalAi.classList.remove("open"));
+      document.getElementById("btn-ai-cancel").addEventListener("click", () => modalAi.classList.remove("open"));
+      document.getElementById("btn-ai-apply").addEventListener("click", () => {
+        if (activeShotForAi) {
+          activeShotForAi.voiceover = document.getElementById("ai-refined-text").value;
+          studio.saveLocalState();
+          renderShots(studio.state);
+          updatePacingStats(studio.state);
+          modalAi.classList.remove("open");
+          studio.toast("Voiceover updated with AI refinement", "success");
+        }
+      });
+
+      document.getElementById("btn-save-all").addEventListener("click", () => {
+        studio.syncToCloud();
+      });
+
+      document.getElementById("btn-add-shot").addEventListener("click", () => {
+        if (!studio.state.scenes.length) {
+          studio.state.scenes.push({ id: "scene-1", number: 1, title: "Scene 1", durationSeconds: 30, shots: [] });
+        }
+        const s = studio.state.scenes[0];
+        const newShot = {
+          id: `shot-${s.number}-${s.shots.length + 1}`,
+          sceneId: s.id,
+          shotNumber: s.shots.length + 1,
+          duration: 5.0,
+          stillFile: "stills/00_index/00_index_00_framework.svg",
+          videoFlowFile: "video_flow/01_colorful-file-icons-background.mp4",
+          voiceover: "New voiceover spoken beat...",
+          visualNotes: "Visual notes description...",
+          status: "in-progress",
+          tags: ["new", "beat"],
+          secondOffset: 0
+        };
+        s.shots.push(newShot);
+        studio.saveLocalState();
+        renderShots(studio.state);
+        updatePacingStats(studio.state);
+        studio.toast("Added new shot beat", "success");
+      });
+    });
+
+    function renderShots(state) {
+      const container = document.getElementById("shot-cards-container");
+      if (!state.scenes || !state.scenes.length) {
+        container.innerHTML = `<div class="card"><p>No scenes found. Click Add Shot to begin.</p></div>`;
+        return;
+      }
+
+      let html = "";
+      state.scenes.forEach(scene => {
+        html += `
+          <div style="display:flex; align-items:center; justify-content:space-between; margin: 1.5rem 0 0.75rem; padding-bottom:0.25rem; border-bottom: 2px solid ${scene.color || 'var(--accent-blue)'};">
+            <h3 style="font-size:1.1rem; font-weight:800;">Scene ${scene.number}: ${scene.title}</h3>
+            <span class="badge" style="background:${scene.color}22; color:${scene.color}; border:1px solid ${scene.color}55;">
+              ${scene.timecodeStart || '0:00'} - ${scene.timecodeEnd || '0:30'}
+            </span>
+          </div>
+        `;
+
+        (scene.shots || []).forEach(shot => {
+          const words = (shot.voiceover || "").split(/\s+/).filter(Boolean).length;
+          const wpm = shot.duration > 0 ? Math.round((words / shot.duration) * 60) : 0;
+          const wpmBadge = wpm > 155 ? "badge-red" : wpm < 110 ? "badge-gold" : "badge-green";
+
+          html += `
+            <div class="shot-card" id="card-${shot.id}">
+              <div class="shot-meta-bar">
+                <div style="display:flex; align-items:center; gap:0.5rem;">
+                  <strong style="font-size:0.95rem;">Shot ${scene.number}.${shot.shotNumber}</strong>
+                  <span class="badge ${shot.status === 'completed' ? 'badge-green' : 'badge-gold'}">${shot.status}</span>
+                  <span class="badge ${wpmBadge}">${wpm} WPM</span>
+                </div>
+                <div style="display:flex; gap:0.4rem;">
+                  <button class="btn btn-sm" onclick="playShotAudio('${shot.id}')" title="Play Voiceover Preview">▶️ Speak</button>
+                  <button class="btn btn-sm btn-purple" onclick="openAiForShot('${shot.id}')" title="AI Polish">🤖 AI Polish</button>
+                  <button class="btn btn-sm" onclick="deleteShot('${shot.id}')" style="color:var(--accent-red);">🗑️</button>
+                </div>
+              </div>
+
+              <div class="grid-2">
+                <div>
+                  <div class="shot-media-preview">
+                    <img src="${shot.stillFile || 'stills/00_index/00_index_00_framework.svg'}" alt="Preview" onerror="this.src='stills/00_index/00_index_00_framework.svg'">
+                  </div>
+                  <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.5rem;">
+                    ${(shot.tags || []).map(t => `<span class="tag-pill">#${t}</span>`).join('')}
+                  </div>
+                </div>
+
+                <div>
+                  <div class="form-group" style="margin-bottom:0.5rem;">
+                    <label class="form-label" style="display:flex; justify-content:space-between;">
+                      <span>Voiceover Script Copy</span>
+                      <span style="color:var(--text-muted);">${words} words • ${shot.duration}s</span>
+                    </label>
+                    <textarea class="form-textarea" rows="3" onchange="updateShotVoiceover('${shot.id}', this.value)">${shot.voiceover || ''}</textarea>
+                  </div>
+
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label class="form-label">Visual Direction & Notes</label>
+                    <input type="text" class="form-input" value="${shot.visualNotes || ''}" onchange="updateShotVisualNotes('${shot.id}', this.value)">
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+      });
+
+      container.innerHTML = html;
+    }
+
+    function findShot(shotId) {
+      for (const scene of studio.state.scenes) {
+        for (const shot of scene.shots) {
+          if (shot.id === shotId) return { scene, shot };
+        }
+      }
+      return null;
+    }
+
+    window.updateShotVoiceover = (shotId, value) => {
+      const match = findShot(shotId);
+      if (match) {
+        match.shot.voiceover = value;
+        studio.saveLocalState();
+        updatePacingStats(studio.state);
+        // Refresh WPM badge
+        renderShots(studio.state);
+      }
+    };
+
+    window.updateShotVisualNotes = (shotId, value) => {
+      const match = findShot(shotId);
+      if (match) {
+        match.shot.visualNotes = value;
+        studio.saveLocalState();
+      }
+    };
+
+    window.playShotAudio = (shotId) => {
+      const match = findShot(shotId);
+      if (match && match.shot.voiceover) {
+        studio.speakVoiceover(match.shot.voiceover);
+      }
+    };
+
+    window.openAiForShot = async (shotId) => {
+      const match = findShot(shotId);
+      if (match) {
+        activeShotForAi = match.shot;
+        document.getElementById("ai-original-text").value = match.shot.voiceover || "";
+        document.getElementById("ai-refined-text").value = "Generating AI optimized cadence...";
+        document.getElementById("modal-ai").classList.add("open");
+
+        const refined = await studio.aiRewriteText(match.shot.voiceover, "rewrite");
+        document.getElementById("ai-refined-text").value = refined;
+      }
+    };
+
+    window.deleteShot = (shotId) => {
+      for (const scene of studio.state.scenes) {
+        const idx = scene.shots.findIndex(s => s.id === shotId);
+        if (idx !== -1) {
+          scene.shots.splice(idx, 1);
+          studio.saveLocalState();
+          renderShots(studio.state);
+          updatePacingStats(studio.state);
+          studio.toast("Shot removed", "info");
+          break;
+        }
+      }
+    };
+
+    function updatePacingStats(state) {
+      let totalWords = 0;
+      let totalSeconds = 0;
+      (state.scenes || []).forEach(sc => {
+        (sc.shots || []).forEach(sh => {
+          const w = (sh.voiceover || "").split(/\s+/).filter(Boolean).length;
+          totalWords += w;
+          totalSeconds += (sh.duration || 5);
+        });
+      });
+
+      const avgWpm = totalSeconds > 0 ? Math.round((totalWords / totalSeconds) * 60) : 140;
+      document.getElementById("stat-total-words").textContent = totalWords;
+      const m = Math.floor(totalSeconds / 60);
+      const s = Math.round(totalSeconds % 60);
+      document.getElementById("stat-total-runtime").textContent = `${m}m ${s < 10 ? '0' : ''}${s}s`;
+      document.getElementById("pacing-badge").textContent = `${avgWpm} WPM`;
+
+      const bar = document.getElementById("pacing-progress-bar");
+      const pct = Math.min(100, Math.round((totalSeconds / 180) * 100));
+      bar.style.width = `${pct}%`;
+    }
+
+    async function loadSnapshots() {
+      try {
+        const res = await fetch("/api/state/list");
+        const data = await res.json();
+        const list = document.getElementById("snapshots-list");
+        if (data.backups && data.backups.length > 0) {
+          list.innerHTML = data.backups.slice(0, 5).map(b => `
+            <div style="display:flex; justify-content:space-between; padding:0.4rem 0; border-bottom:1px solid var(--border-color);">
+              <span>${b.filename || b.name}</span>
+              <span style="color:var(--text-muted); font-size:0.75rem;">${b.content_length} B</span>
+            </div>
+          `).join("");
+        } else {
+          list.innerHTML = "No snapshots recorded yet.";
+        }
+      } catch (e) {
+        document.getElementById("snapshots-list").innerHTML = "Local mode active.";
+      }
+    }
+  </script>
+</body>
+</html>

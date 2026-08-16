@@ -1,0 +1,33 @@
+{
+  "folder": "video_flow",
+  "count": 26,
+  "naming": "NN_first-frame-slug.mp4 (slug from OpenRouter vision of first frame)",
+  "files": [
+    { "seq": 1, "orig_num": 1, "slug": "colorful-file-icons-background", "to": "01_colorful-file-icons-background.mp4", "frame": "_first_frames/01_colorful-file-icons-background.svg", "title": "46k File Chaos Particle Field", "duration": 5.0, "scene": 1 },
+    { "seq": 2, "orig_num": 2, "slug": "glowing-vault-swirl", "to": "02_glowing-vault-swirl.mp4", "frame": "_first_frames/02_glowing-vault-swirl.svg", "title": "Obsidian Glowing Core Vortex", "duration": 5.0, "scene": 1 },
+    { "seq": 3, "orig_num": 3, "slug": "broken-search-bar-glitch", "to": "03_broken-search-bar-glitch.mp4", "frame": "_first_frames/03_broken-search-bar-glitch.svg", "title": "Broken Search Query Glitch", "duration": 5.0, "scene": 1 },
+    { "seq": 4, "orig_num": 4, "slug": "static-para-folders-collapse", "to": "04_static-para-folders-collapse.mp4", "frame": "_first_frames/04_static-para-folders-collapse.svg", "title": "Static PARA Hierarchy Crumble", "duration": 7.5, "scene": 2 },
+    { "seq": 5, "orig_num": 5, "slug": "neural-network-active-synapse", "to": "05_neural-network-active-synapse.mp4", "frame": "_first_frames/05_neural-network-active-synapse.svg", "title": "Active Synapse Fire Sequence", "duration": 7.5, "scene": 2 },
+    { "seq": 6, "orig_num": 6, "slug": "cognitive-overload-graph", "to": "06_cognitive-overload-graph.mp4", "frame": "_first_frames/06_cognitive-overload-graph.svg", "title": "Cognitive Load Spike Graph", "duration": 7.5, "scene": 2 },
+    { "seq": 7, "orig_num": 7, "slug": "second-brain-ai-synthesis", "to": "07_second-brain-ai-synthesis.mp4", "frame": "_first_frames/07_second-brain-ai-synthesis.svg", "title": "Second Brain Active Recall", "duration": 7.5, "scene": 2 },
+    { "seq": 8, "orig_num": 8, "slug": "viral-video-breakdown-radar", "to": "08_viral-video-breakdown-radar.mp4", "frame": "_first_frames/08_viral-video-breakdown-radar.svg", "title": "Reverse Response Radar Scan", "duration": 7.5, "scene": 3 },
+    { "seq": 9, "orig_num": 9, "slug": "second-by-second-timeline-mesh", "to": "09_second-by-second-timeline-mesh.mp4", "frame": "_first_frames/09_second-by-second-timeline-mesh.svg", "title": "Per-Second Timeline Mapping", "duration": 7.5, "scene": 3 },
+    { "seq": 10, "orig_num": 10, "slug": "knowledge-graph-pulse-sync", "to": "10_knowledge-graph-pulse-sync.mp4", "frame": "_first_frames/10_knowledge-graph-pulse-sync.svg", "title": "Personal Knowledge Pulse Sync", "duration": 7.5, "scene": 3 },
+    { "seq": 11, "orig_num": 11, "slug": "sixteen-stage-cards-cascade", "to": "11_sixteen-stage-cards-cascade.mp4", "frame": "_first_frames/11_sixteen-stage-cards-cascade.svg", "title": "16-Stage Pipeline Cascade", "duration": 7.5, "scene": 3 },
+    { "seq": 12, "orig_num": 12, "slug": "script-guru-pacing-dial", "to": "12_script-guru-pacing-dial.mp4", "frame": "_first_frames/12_script-guru-pacing-dial.svg", "title": "Pacing & WPM Gauge Dial", "duration": 7.5, "scene": 4 },
+    { "seq": 13, "orig_num": 13, "slug": "teleprompter-kinetic-scroll", "to": "13_teleprompter-kinetic-scroll.mp4", "frame": "_first_frames/13_teleprompter-kinetic-scroll.svg", "title": "Kinetic Teleprompter Scroll", "duration": 7.5, "scene": 4 },
+    { "seq": 14, "orig_num": 14, "slug": "azure-blob-hmac-handshake", "to": "14_azure-blob-hmac-handshake.mp4", "frame": "_first_frames/14_azure-blob-hmac-handshake.svg", "title": "HMAC-SHA256 Cloud Sync", "duration": 7.5, "scene": 4 },
+    { "seq": 15, "orig_num": 15, "slug": "large-video-binary-splitter", "to": "15_large-video-binary-splitter.mp4", "frame": "_first_frames/15_large-video-binary-splitter.svg", "title": "24MB Binary Chunk Splitter", "duration": 7.5, "scene": 4 },
+    { "seq": 16, "orig_num": 16, "slug": "live-shotlist-realtime-grid", "to": "16_live-shotlist-realtime-grid.mp4", "frame": "_first_frames/16_live-shotlist-realtime-grid.svg", "title": "Real-time Shotlist Data Grid", "duration": 8.0, "scene": 5 },
+    { "seq": 17, "orig_num": 17, "slug": "voiceover-recording-mic-wave", "to": "17_voiceover-recording-mic-wave.mp4", "frame": "_first_frames/17_voiceover-recording-mic-wave.svg", "title": "Voiceover Studio Audio Stream", "duration": 8.0, "scene": 5 },
+    { "seq": 18, "orig_num": 18, "slug": "automated-wpm-alert-banner", "to": "18_automated-wpm-alert-banner.mp4", "frame": "_first_frames/18_automated-wpm-alert-banner.svg", "title": "WPM Guardrail Dynamic Alert", "duration": 8.0, "scene": 5 },
+    { "seq": 19, "orig_num": 19, "slug": "azure-snapshot-version-tree", "to": "19_azure-snapshot-version-tree.mp4", "frame": "_first_frames/19_azure-snapshot-version-tree.svg", "title": "Azure Snapshot Version Tree", "duration": 8.0, "scene": 5 },
+    { "seq": 20, "orig_num": 20, "slug": "final-master-timeline-render", "to": "20_final-master-timeline-render.mp4", "frame": "_first_frames/20_final-master-timeline-render.svg", "title": "Final 4K Master Render Stream", "duration": 10.0, "scene": 6 },
+    { "seq": 21, "orig_num": 21, "slug": "youtube-distribution-dashboard", "to": "21_youtube-distribution-dashboard.mp4", "frame": "_first_frames/21_youtube-distribution-dashboard.svg", "title": "Omnichannel Video Distribution", "duration": 10.0, "scene": 6 },
+    { "seq": 22, "orig_num": 22, "slug": "roger-rabbit-signature-outro", "to": "22_roger-rabbit-signature-outro.mp4", "frame": "_first_frames/22_roger-rabbit-signature-outro.svg", "title": "Roger Rabbit Signature Outro", "duration": 10.0, "scene": 6 },
+    { "seq": 23, "orig_num": 23, "slug": "github-flyio-deployment-badge", "to": "23_github-flyio-deployment-badge.mp4", "frame": "_first_frames/23_github-flyio-deployment-badge.svg", "title": "Fly.io & Docker Cloud Deploy", "duration": 10.0, "scene": 6 },
+    { "seq": 24, "orig_num": 24, "slug": "production-speedup-metrics", "to": "24_production-speedup-metrics.mp4", "frame": "_first_frames/24_production-speedup-metrics.svg", "title": "10x Production Speed Benchmark", "duration": 5.0, "scene": 6 },
+    { "seq": 25, "orig_num": 25, "slug": "automated-b-roll-synthesizer", "to": "25_automated-b-roll-synthesizer.mp4", "frame": "_first_frames/25_automated-b-roll-synthesizer.svg", "title": "AI B-Roll Generator Pipeline", "duration": 5.0, "scene": 6 },
+    { "seq": 26, "orig_num": 26, "slug": "system-closing-call-to-action", "to": "26_system-closing-call-to-action.mp4", "frame": "_first_frames/26_system-closing-call-to-action.svg", "title": "DeliveryPilot Call to Action", "duration": 5.0, "scene": 6 }
+  ]
+}

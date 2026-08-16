@@ -1,0 +1,9 @@
+.git
+.gitignore
+__pycache__
+*.pyc
+.env
+.venv
+3_Simulation/rawexport
+parts_*
+.DS_Store

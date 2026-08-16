@@ -1,0 +1,128 @@
+[
+  {
+    "file": "stills/00_index/00_index_00_framework.svg",
+    "stage": "00",
+    "stageName": "Index",
+    "caption": "Framework Overview: 16-Stage Reverse Engineering Studio",
+    "voiceoverDefault": true
+  },
+  {
+    "file": "stills/01_architecture/01_architecture_01_system-diagram.svg",
+    "stage": "01",
+    "stageName": "Architecture",
+    "caption": "Full-Stack Topology: Frontend, Python Server, Azure & OpenRouter",
+    "voiceoverDefault": true
+  },
+  {
+    "file": "stills/02_plan/02_plan_00_cover-title.svg",
+    "stage": "02",
+    "stageName": "Plan",
+    "caption": "Title card: Reverse Response Video Production System",
+    "voiceoverDefault": true
+  },
+  {
+    "file": "stills/02_plan/02_plan_01_hook-chaos.svg",
+    "stage": "02",
+    "stageName": "Plan",
+    "caption": "Scene 1 Hook: 46,000 Scattered Notes in Obsidian",
+    "voiceoverDefault": true
+  },
+  {
+    "file": "stills/02_plan/02_plan_02_framework-gap.svg",
+    "stage": "02",
+    "stageName": "Plan",
+    "caption": "Scene 2: Static PARA Folders vs Active Neural Synthesis",
+    "voiceoverDefault": true
+  },
+  {
+    "file": "stills/03_assets/03_assets_01_para-vault-counts.svg",
+    "stage": "03",
+    "stageName": "Assets",
+    "caption": "Obsidian Vault Metrics: Notes, Tags, and Asset Distributions",
+    "voiceoverDefault": false
+  },
+  {
+    "file": "stills/04_cohort/04_cohort_01_community-insights.svg",
+    "stage": "04",
+    "stageName": "Cohort",
+    "caption": "Community Feedback Loops and Production Cohort Notes",
+    "voiceoverDefault": false
+  },
+  {
+    "file": "stills/05_gaps/05_gaps_01_concept-knowledge-map.svg",
+    "stage": "05",
+    "stageName": "Gaps",
+    "caption": "Concept Gap Analysis & Cross-Domain Mind Mapping",
+    "voiceoverDefault": false
+  },
+  {
+    "file": "stills/06_assembly/06_assembly_00_scene1-2-stills.svg",
+    "stage": "06",
+    "stageName": "Assembly",
+    "caption": "Storyboard Assembly: Synchronized Timeline Beats for Scene 1 & 2",
+    "voiceoverDefault": true
+  },
+  {
+    "file": "stills/06_assembly/06_assembly_01_multitrack.svg",
+    "stage": "06",
+    "stageName": "Assembly",
+    "caption": "Multitrack Video, B-Roll, and Voiceover Audio Alignment",
+    "voiceoverDefault": true
+  },
+  {
+    "file": "stills/07_polish/07_polish_01_transitions.svg",
+    "stage": "07",
+    "stageName": "Polish",
+    "caption": "Kinetic Micro-Transitions and Visual Rhythm Tuning",
+    "voiceoverDefault": false
+  },
+  {
+    "file": "stills/08_refinement/08_refinement_01_pacing-adjustments.svg",
+    "stage": "08",
+    "stageName": "Refinement",
+    "caption": "Audio-Visual Refinement: Word-Per-Minute Alignment Check",
+    "voiceoverDefault": true
+  },
+  {
+    "file": "stills/09_audio/09_audio_01_voiceover-mastering.svg",
+    "stage": "09",
+    "stageName": "Audio",
+    "caption": "Audio Mastering: EQ, Compression & Voiceover Purity",
+    "voiceoverDefault": true
+  },
+  {
+    "file": "stills/10_editcolor/10_editcolor_01_color-grading-lut.svg",
+    "stage": "10",
+    "stageName": "EditColor",
+    "caption": "Cinematic High-Contrast Dark Theme Color Grading Profile",
+    "voiceoverDefault": false
+  },
+  {
+    "file": "stills/11_thumbnail/11_thumbnail_01_hero-preview.svg",
+    "stage": "11",
+    "stageName": "Thumbnail",
+    "caption": "A/B High CTR Thumbnail Artwork & Title Composition",
+    "voiceoverDefault": false
+  },
+  {
+    "file": "stills/12_export/12_export_01_render-settings.svg",
+    "stage": "12",
+    "stageName": "Export",
+    "caption": "Export Preset: 4K Prores / 1080p 60fps Rec.709 Master",
+    "voiceoverDefault": false
+  },
+  {
+    "file": "stills/13_metadata/13_metadata_01_seo-distribution.svg",
+    "stage": "13",
+    "stageName": "Metadata",
+    "caption": "YouTube Metadata, Tags, Chapters, and Distribution Schedule",
+    "voiceoverDefault": false
+  },
+  {
+    "file": "stills/15_tactics/15_tactics_01_editor-sop-checklist.svg",
+    "stage": "15",
+    "stageName": "Tactics",
+    "caption": "Editor Standard Operating Procedures & Quality Gate Checklist",
+    "voiceoverDefault": true
+  }
+]
