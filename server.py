@@ -201,9 +201,26 @@ vault_index = VaultSearchIndex(BASE_DIR)
 
 
 class StudioRequestHandler(SimpleHTTPRequestHandler):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, directory=BASE_DIR, **kwargs)
+
+    def translate_path(self, path):
+        import posixpath
+        path = path.split('?', 1)[0].split('#', 1)[0]
+        path = posixpath.normpath(urllib.parse.unquote(path))
+        words = [w for w in path.split('/') if w]
+        full_path = BASE_DIR
+        for word in words:
+            if os.path.dirname(word) or word in (os.curdir, os.pardir):
+                continue
+            full_path = os.path.join(full_path, word)
+        if path.endswith('/') or not words:
+            full_path = os.path.join(full_path, 'index.html') if os.path.isdir(full_path) else full_path
+        return full_path
+
     def end_headers(self):
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
         self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With")
         self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
         super().end_headers()
@@ -211,6 +228,10 @@ class StudioRequestHandler(SimpleHTTPRequestHandler):
     def do_OPTIONS(self):
         self.send_response(204)
         self.end_headers()
+
+    def do_HEAD(self):
+        # Delegate to do_GET for proper header resolution
+        self.do_GET()
 
     def send_json_response(self, data, status=200):
         body = json.dumps(data, indent=2).encode("utf-8")
