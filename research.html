@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Master Research Studio — August Video Animation #2</title>
+  <title>Research Studio (Reverse Response & Second Brain Upload) — August Video Animation #2</title>
   <link rel="stylesheet" href="style.css">
   <style>
     .studio-layout {
       display: grid;
-      grid-template-columns: 340px 1fr 340px;
+      grid-template-columns: 380px 1fr 340px;
       gap: 1.25rem;
       align-items: start;
     }
-    @media (max-width: 1200px) {
+    @media (max-width: 1280px) {
       .studio-layout {
         grid-template-columns: 1fr;
       }
@@ -42,7 +42,7 @@
       align-items: center;
       justify-content: center;
     }
-    .shot-media-preview img, .shot-media-preview video {
+    .shot-media-preview img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -68,16 +68,24 @@
       max-height: calc(100vh - 90px);
       overflow-y: auto;
     }
-    .vault-result-item {
-      padding: 0.6rem 0.75rem;
+    .note-snippet-card {
+      padding: 0.75rem;
       border-radius: var(--radius-sm);
       background: var(--bg-surface-elevated);
       margin-bottom: 0.5rem;
-      font-size: 0.8rem;
-      cursor: pointer;
       border: 1px solid var(--border-color);
+      font-size: 0.8rem;
     }
-    .vault-result-item:hover {
+    .drop-zone {
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      background: var(--bg-surface-elevated);
+      transition: all var(--transition-fast);
+    }
+    .drop-zone:hover, .drop-zone.dragover {
       border-color: var(--accent-purple);
       background: var(--bg-surface-hover);
     }
@@ -89,93 +97,108 @@
   <main class="app-container">
     <div class="view-header">
       <div class="view-title-group">
-        <h1>🎬 Master Shotlist Studio & Second Brain Research</h1>
-        <p>Interactive scene-by-scene storyboard, second-by-second pacing, Vault intelligence, and direct media upload.</p>
+        <h1>🎬 1. Master Research Studio</h1>
+        <p>Reverse response reference video breakdown, manual Second Brain note upload & injection, and scene-by-scene storyboard.</p>
       </div>
       <div class="header-actions">
         <button class="btn btn-primary" id="btn-add-shot">+ Add Shot Beat</button>
         <button class="btn btn-purple" id="btn-open-upload">📤 Upload Media / Video</button>
-        <button class="btn btn-success" id="btn-save-all">💾 Save Shotlist</button>
+        <button class="btn btn-success" id="btn-save-all">💾 Save All</button>
       </div>
     </div>
 
     <div class="studio-layout">
-      <!-- Left Sidebar: Second Brain Vault & Reference Video Breakdown -->
+      <!-- Left Sidebar: Section 10 - Reverse Response & Second Brain Manual Upload -->
       <aside class="sticky-panel">
-        <!-- Section 10: Reference Video Sync Box -->
-        <div class="card" style="margin-bottom: 1.25rem;">
+        <!-- 1. Reverse Response Video Section -->
+        <div class="card" style="margin-bottom: 1.25rem; border-top: 3px solid var(--accent-red);">
           <div class="card-header">
-            <span class="card-title">📹 Reference Response Video</span>
-            <span class="badge badge-red">Section 10</span>
+            <span class="card-title">📹 1. Reverse Video Reference</span>
+            <span class="badge badge-red">Pacing Model</span>
           </div>
           <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
-            Reverse-engineered benchmark video timeline breakdown:
+            Break down the selected popular response video second-by-second:
           </p>
           <div class="form-group">
-            <label class="form-label">Reference Video Title</label>
-            <input type="text" class="form-input" id="ref-video-title" value="High Retention AI Tech Explainer">
+            <label class="form-label">Reference Title / Topic</label>
+            <input type="text" class="form-input" id="ref-video-title" value="High-Retention AI System Breakdown">
           </div>
           <div class="form-group">
-            <label class="form-label">Second-by-Second Scrubber</label>
+            <label class="form-label">Second-by-Second Scrubber (0:00 - 3:00)</label>
             <input type="range" min="0" max="180" value="0" id="ref-video-scrubber" style="width:100%;">
             <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">
               <span>0:00 (Hook)</span>
-              <span id="ref-current-time" style="font-weight:700; color:var(--accent-blue);">0:00</span>
+              <span id="ref-current-time" style="font-weight:700; color:var(--accent-red);">0:00</span>
               <span>3:00 (Payoff)</span>
             </div>
           </div>
-          <div id="ref-beat-highlight" style="padding: 0.5rem; background: var(--bg-surface-elevated); border-radius: var(--radius-sm); font-size: 0.8rem; color: var(--text-secondary); border-left: 3px solid var(--accent-blue);">
+          <div id="ref-beat-highlight" style="padding: 0.6rem; background: var(--bg-surface-elevated); border-radius: var(--radius-sm); font-size: 0.8rem; color: var(--text-secondary); border-left: 3px solid var(--accent-red); margin-bottom: 0.75rem;">
             Active Beat: Scene 1 Hook & 46k Notes Chaos
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label">Pattern Takeaways</label>
+            <textarea class="form-textarea" rows="2" placeholder="Note hook technique, pattern interrupt interval, or visual cadence..." style="font-size: 0.8rem;"></textarea>
           </div>
         </div>
 
-        <!-- Second Brain Vault Retrieval (Manually Triggered) -->
-        <div class="card">
+        <!-- 2. Second Brain Manual Upload & Paste Section -->
+        <div class="card" style="border-top: 3px solid var(--accent-purple);">
           <div class="card-header">
-            <span class="card-title">🧠 Second Brain Intelligence</span>
-            <span class="badge badge-purple">Manual Triggers</span>
+            <span class="card-title">🧠 2. Second Brain Manual Upload</span>
+            <span class="badge badge-purple">Obsidian Notes</span>
           </div>
-          <p style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
-            Manually query Obsidian notes or inject personal insights into script beats:
+          <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+            Upload your Obsidian <code>.md</code> note files or paste markdown concepts manually:
           </p>
-          <div class="form-group" style="margin-bottom: 0.5rem;">
-            <input type="text" class="form-input" id="vault-search-input" placeholder="Query term (e.g. obsidian, agents)...">
-          </div>
-          <div style="display: flex; gap: 0.4rem; margin-bottom: 0.75rem;">
-            <button class="btn btn-sm btn-purple" id="btn-trigger-vault-search" style="flex: 1;">🔍 Trigger Search</button>
-            <button class="btn btn-sm" id="btn-manual-note-add" style="flex: 1;">✍️ Manual Note</button>
+
+          <!-- File Drop / Select Area -->
+          <div class="drop-zone" id="obsidian-drop-zone" style="margin-bottom: 0.75rem;">
+            <div style="font-size: 1.5rem; margin-bottom: 0.25rem;">📂</div>
+            <strong style="font-size: 0.85rem;">Drop Obsidian (.md / .txt) File</strong>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">or click to select file from your system</p>
+            <input type="file" id="obsidian-file-input" accept=".md,.txt,.json" style="display: none;">
           </div>
 
-          <!-- Manual Note Drawer -->
-          <div id="manual-note-drawer" style="display: none; padding: 0.6rem; background: var(--bg-surface-elevated); border-radius: var(--radius-sm); margin-bottom: 0.75rem; border: 1px solid var(--border-color);">
-            <label class="form-label" style="font-size: 0.75rem;">Insert Manual Second Brain Note</label>
-            <textarea class="form-textarea" id="manual-note-text" rows="2" placeholder="Write personal takeaway or concept..." style="font-size: 0.8rem;"></textarea>
-            <div style="display: flex; justify-content: flex-end; gap: 0.4rem; margin-top: 0.4rem;">
-              <button class="btn btn-sm" id="btn-cancel-manual-note">Cancel</button>
-              <button class="btn btn-sm btn-success" id="btn-insert-manual-note">Inject to Active Shot</button>
-            </div>
+          <!-- Direct Paste Form -->
+          <div class="form-group">
+            <label class="form-label">Or Paste Note Text Manually</label>
+            <textarea class="form-textarea" id="manual-note-input" rows="3" placeholder="Paste thoughts, frameworks, or Obsidian excerpt..." style="font-size: 0.8rem; font-family: var(--font-mono);"></textarea>
           </div>
 
-          <div id="vault-results-list">
-            <div style="color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 0.75rem;">
-              Click <strong>Trigger Search</strong> or type to query indexed vault files.
+          <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+            <button class="btn btn-sm btn-purple" id="btn-add-note-snippet" style="flex: 1;">📥 Add to Snippets</button>
+            <button class="btn btn-sm btn-success" id="btn-inject-direct" style="flex: 1;">⚡ Inject to Scene 1</button>
+          </div>
+
+          <!-- Loaded Notes Repository -->
+          <div style="font-weight: 700; font-size: 0.8rem; margin-bottom: 0.5rem; color: var(--text-secondary);">
+            Loaded Second Brain Snippets
+          </div>
+          <div id="loaded-notes-list">
+            <div class="note-snippet-card">
+              <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                <strong style="color:var(--accent-purple);">Obsidian Neural Synthesis</strong>
+                <span class="badge badge-purple">Seed Note</span>
+              </div>
+              <p style="color:var(--text-muted); font-size:0.75rem; margin-bottom:6px;">"Folders are where good ideas go to die. We need active neural synthesis."</p>
+              <button class="btn btn-sm" onclick="injectSnippetText('Folders are where good ideas go to die. We need active neural synthesis.')" style="width:100%; font-size:0.75rem;">+ Inject into Active Shot</button>
             </div>
           </div>
         </div>
       </aside>
 
-      <!-- Center Column: Vertical Shot Cards Stream -->
+      <!-- Center Column: Vertical Storyboard Shot Beats -->
       <section>
         <div id="shot-cards-container">
-          <!-- Rendered by JS -->
+          <!-- Populated by JS -->
         </div>
       </section>
 
-      <!-- Right Sidebar: Script Pacing & AI Teleprompter Assistant -->
+      <!-- Right Sidebar: Pacing Analysis & Quick Actions -->
       <aside class="sticky-panel">
         <div class="card" style="margin-bottom: 1.25rem;">
           <div class="card-header">
-            <span class="card-title">⚡ Script Coach & Pacing</span>
+            <span class="card-title">⚡ Script Pacing Guardrail</span>
             <span class="badge badge-green" id="pacing-badge">138 WPM</span>
           </div>
           <div style="margin-bottom: 0.75rem;">
@@ -195,11 +218,11 @@
           <div style="height: 6px; background: var(--bg-surface-elevated); border-radius: 999px; overflow: hidden; margin-bottom: 1rem;">
             <div id="pacing-progress-bar" style="height: 100%; width: 75%; background: var(--accent-green); transition: width 0.3s ease;"></div>
           </div>
-          <button class="btn btn-purple" style="width: 100%; margin-bottom: 0.5rem;" id="btn-ai-rewrite-all">🤖 Optimize Script Flow</button>
-          <button class="btn" style="width: 100%;" id="btn-export-script">📄 View _script.md</button>
+          <a href="script_guru.html" class="btn btn-purple" style="width: 100%; margin-bottom: 0.5rem; text-decoration: none; text-align: center;">🧠 Open Script Guru Coach</a>
+          <a href="timeline.html" class="btn" style="width: 100%; text-decoration: none; text-align: center;">⏱️ View Visual Timeline</a>
         </div>
 
-        <!-- Snapshots / Backup List Card -->
+        <!-- Snapshots / Cloud Sync Status -->
         <div class="card">
           <div class="card-header">
             <span class="card-title">🕒 Backup Snapshots</span>
@@ -213,7 +236,7 @@
     </div>
   </main>
 
-  <!-- Upload Modal (Section 10) -->
+  <!-- Upload Modal -->
   <div class="modal-backdrop" id="modal-upload">
     <div class="modal-card">
       <div class="card-header">
@@ -295,80 +318,43 @@
         else beatHighlight.textContent = "Active Beat: Scene 6 Payoff & Roger Rabbit Outro";
       });
 
-      // Search Vault Inverted Index (Manual or auto-debounced)
-      const searchInput = document.getElementById("vault-search-input");
-      const executeVaultSearch = async () => {
-        const q = searchInput.value.trim();
-        if (!q) {
-          document.getElementById("vault-results-list").innerHTML = `<div style="color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 1rem;">Type a term or click Trigger Search.</div>`;
-          return;
-        }
-        try {
-          const res = await fetch(`/api/vault-search?q=${encodeURIComponent(q)}`);
-          const data = await res.json();
-          if (data.results && data.results.length > 0) {
-            document.getElementById("vault-results-list").innerHTML = data.results.map(r => `
-              <div class="vault-result-item" onclick="insertVaultReference('${r.path}')" title="Click to manually insert reference into active shot">
-                <strong>${r.path}</strong>
-                <div style="display:flex; justify-content:space-between; color:var(--text-muted); font-size:0.7rem; margin-top:2px;">
-                  <span>Score: ${Math.round(r.score * 100)}%</span>
-                  <span>${r.size} bytes</span>
-                </div>
-              </div>
-            `).join("");
-          } else {
-            document.getElementById("vault-results-list").innerHTML = `<div style="color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 1rem;">No matching vault files found.</div>`;
-          }
-        } catch(e) {
-          console.error(e);
-        }
-      };
+      // Second Brain File Drop & Select
+      const dropZone = document.getElementById("obsidian-drop-zone");
+      const fileInput = document.getElementById("obsidian-file-input");
 
-      document.getElementById("btn-trigger-vault-search").addEventListener("click", executeVaultSearch);
-
-      let searchDebounce = null;
-      searchInput.addEventListener("input", () => {
-        clearTimeout(searchDebounce);
-        searchDebounce = setTimeout(executeVaultSearch, 300);
+      dropZone.addEventListener("click", () => fileInput.click());
+      dropZone.addEventListener("dragover", (e) => { e.preventDefault(); dropZone.classList.add("dragover"); });
+      dropZone.addEventListener("dragleave", () => dropZone.classList.remove("dragover"));
+      dropZone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropZone.classList.remove("dragover");
+        if (e.dataTransfer.files.length) handleObsidianFile(e.dataTransfer.files[0]);
+      });
+      fileInput.addEventListener("change", () => {
+        if (fileInput.files.length) handleObsidianFile(fileInput.files[0]);
       });
 
-      // Manual Note Insertion Controls
-      const manualDrawer = document.getElementById("manual-note-drawer");
-      document.getElementById("btn-manual-note-add").addEventListener("click", () => {
-        manualDrawer.style.display = manualDrawer.style.display === "none" ? "block" : "none";
-      });
-      document.getElementById("btn-cancel-manual-note").addEventListener("click", () => {
-        manualDrawer.style.display = "none";
-      });
-      document.getElementById("btn-insert-manual-note").addEventListener("click", () => {
-        const text = document.getElementById("manual-note-text").value.trim();
+      // Manual Note Paste & Snippet Add
+      document.getElementById("btn-add-note-snippet").addEventListener("click", () => {
+        const text = document.getElementById("manual-note-input").value.trim();
         if (!text) {
-          studio.toast("Please type a note to insert", "warning");
+          studio.toast("Please paste or type note text first", "warning");
           return;
         }
-        // Insert into first available shot or active
-        if (studio.state.scenes.length && studio.state.scenes[0].shots.length) {
-          const targetShot = studio.state.scenes[0].shots[0];
-          targetShot.voiceover = (targetShot.voiceover || "") + " " + text;
-          targetShot.visualNotes = (targetShot.visualNotes || "") + ` [Second Brain: ${text}]`;
-          studio.saveLocalState();
-          renderShots(studio.state);
-          updatePacingStats(studio.state);
-          document.getElementById("manual-note-text").value = "";
-          manualDrawer.style.display = "none";
-          studio.toast("Manually injected Second Brain insight into Scene 1 Shot 1!", "success");
-        }
+        addSnippetCard("Manual Note Excerpt", text);
+        document.getElementById("manual-note-input").value = "";
+        studio.toast("Added Second Brain snippet!", "success");
       });
 
-      window.insertVaultReference = (path) => {
-        if (studio.state.scenes.length && studio.state.scenes[0].shots.length) {
-          const targetShot = studio.state.scenes[0].shots[0];
-          targetShot.visualNotes = (targetShot.visualNotes || "") + ` [Ref: ${path}]`;
-          studio.saveLocalState();
-          renderShots(studio.state);
-          studio.toast(`Linked vault file '${path}' to shot!`, "success");
+      document.getElementById("btn-inject-direct").addEventListener("click", () => {
+        const text = document.getElementById("manual-note-input").value.trim();
+        if (!text) {
+          studio.toast("Please paste or type note text first", "warning");
+          return;
         }
-      };
+        injectSnippetText(text);
+        document.getElementById("manual-note-input").value = "";
+      });
 
       // Upload Modal Controllers
       const modalUpload = document.getElementById("modal-upload");
@@ -379,12 +365,12 @@
       const uploadForm = document.getElementById("upload-form");
       uploadForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const fileInput = document.getElementById("file-input");
-        if (!fileInput.files.length) {
+        const fInput = document.getElementById("file-input");
+        if (!fInput.files.length) {
           studio.toast("Please select a file to upload", "warning");
           return;
         }
-        const file = fileInput.files[0];
+        const file = fInput.files[0];
         const formData = new FormData();
         formData.append("file", file, file.name);
 
@@ -393,16 +379,13 @@
         document.getElementById("upload-progress").style.width = "40%";
 
         try {
-          const res = await fetch("/api/upload", {
-            method: "POST",
-            body: formData
-          });
+          const res = await fetch("/api/upload", { method: "POST", body: formData });
           document.getElementById("upload-progress").style.width = "100%";
           if (res.ok) {
             const data = await res.json();
             studio.toast(`Uploaded: ${data.filename}`, "success");
             modalUpload.classList.remove("open");
-            fileInput.value = "";
+            fInput.value = "";
             progressWrap.style.display = "none";
           } else {
             throw new Error("Upload failed");
@@ -457,6 +440,44 @@
         studio.toast("Added new shot beat", "success");
       });
     });
+
+    function handleObsidianFile(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const text = e.target.result;
+        document.getElementById("manual-note-input").value = text;
+        addSnippetCard(file.name, text.substring(0, 140) + "...");
+        studio.toast(`Loaded Obsidian note '${file.name}'!`, "success");
+      };
+      reader.readAsText(file);
+    }
+
+    function addSnippetCard(title, text) {
+      const list = document.getElementById("loaded-notes-list");
+      const div = document.createElement("div");
+      div.className = "note-snippet-card";
+      div.innerHTML = `
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+          <strong style="color:var(--accent-purple);">${title}</strong>
+          <span class="badge badge-purple">Obsidian</span>
+        </div>
+        <p style="color:var(--text-muted); font-size:0.75rem; margin-bottom:6px;">"${text.replace(/"/g, '&quot;')}"</p>
+        <button class="btn btn-sm" onclick="injectSnippetText('${text.replace(/'/g, "\\'")}')" style="width:100%; font-size:0.75rem;">+ Inject into Active Shot</button>
+      `;
+      list.prepend(div);
+    }
+
+    window.injectSnippetText = (text) => {
+      if (studio.state.scenes.length && studio.state.scenes[0].shots.length) {
+        const target = studio.state.scenes[0].shots[0];
+        target.voiceover = (target.voiceover || "") + " " + text;
+        target.visualNotes = (target.visualNotes || "") + " [Obsidian Note Injected]";
+        studio.saveLocalState();
+        renderShots(studio.state);
+        updatePacingStats(studio.state);
+        studio.toast("Injected note text into Scene 1 Shot 1!", "success");
+      }
+    };
 
     function renderShots(state) {
       const container = document.getElementById("shot-cards-container");
@@ -544,7 +565,6 @@
         match.shot.voiceover = value;
         studio.saveLocalState();
         updatePacingStats(studio.state);
-        // Refresh WPM badge
         renderShots(studio.state);
       }
     };

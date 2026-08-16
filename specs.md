@@ -550,26 +550,26 @@ To reproduce this entire repository from zero:
 
 ---
 
-## 10. Reverse Response Video & Second Brain Specification 🎬🧠
+## 10. Reverse Response Video & Second Brain Manual Upload Specification 🎬🧠
 
-### 10.1. Benchmark Reference Video Integration 📹
-- **Selected Viral Model**: A proven high-retention video structure serves as the pacing benchmark.
-- **Second-by-Second Scrubber**: In `research.html`, the video is dissected second-by-second across key psychological gates:
-  - `0:00 - 0:15`: ⚡ Hook & Pain Point Setup ("46,000 notes chaos").
-  - `0:15 - 0:45`: 🧩 The Core Problem & Framework Gap (Static PARA vs Active Neural Synthesis).
+### 10.1. Master Control Dashboard (`index.html`) 🏠
+- Serves as the central navigation control station for the entire 10-step multimedia production studio.
+- Displays quick status badges, duration calculators, and launch buttons for all 10 production views without complex background vault scanning.
+
+### 10.2. Research Studio: Reverse Response Video Model (`research.html`) 📹
+- **Selected Viral Benchmark**: Pacing benchmark video mapped second-by-second across 6 psychological gates:
+  - `0:00 - 0:15`: ⚡ Hook & Problem Setup ("46,000 notes chaos").
+  - `0:15 - 0:45`: 🧩 Framework Gap (Static PARA vs Active Neural Synthesis).
   - `0:45 - 1:15`: 🚀 Discovery & Reverse Response Architecture.
   - `1:15 - 1:45`: 🛠️ The 16-Stage Workbench & Pacing Guardrails.
   - `1:45 - 2:20`: ⚡ Live Execution, WPM Monitoring & Real-Time Sync.
   - `2:20 - 3:00`: 🏆 The Payoff, Call to Action & Roger Rabbit Outro.
 
-### 10.2. Manually Triggered Second Brain Workflows 🧠
-To ensure precision and user control, Second Brain integration is **manually triggered**:
-1. **🔍 Manual Vault Query Trigger (`#btn-trigger-vault-search`)**: User types search queries (e.g. `obsidian`, `neural`, `agents`) and manually hits *Trigger Search* to execute an inverted-index fuzzy search across local Obsidian markdown vaults without noisy auto-suggestions.
-2. **✍️ Manual Personal Insight Injection (`#manual-note-drawer`)**: A dedicated manual drawer allows the creator to input personal takeaways, anecdotes, or niche-specific knowledge and manually inject them directly into active shot beats.
-3. **🔗 Manual Vault Node Linking (`insertVaultReference`)**: Clicking any vault search result directly attaches the source file reference tag (`[Ref: path/to/note.md]`) into the visual notes metadata.
-
-### 10.3. Direct Multimedia Content Upload 📤
-- Direct file/video uploader via `POST /api/upload` storing raw master footage, B-roll clips, Canva slide deck exports, and audio recordings in `uploads/` for immediate reference in the storyboard.
+### 10.3. Research Studio: Second Brain Manual Upload & Paste 🧠
+- **📂 Manual Obsidian File Drop & Select (`#obsidian-drop-zone`)**: Creator drags and drops Obsidian `.md` or `.txt` note files directly into the browser to load notes on-demand.
+- **✍️ Direct Markdown Paste Area (`#manual-note-input`)**: Creator pastes custom insights, frameworks, or note excerpts manually.
+- **⚡ Instant Shot Injection (`#btn-inject-direct` & `injectSnippetText`)**: 1-click injection of loaded Second Brain thoughts directly into Scene 1 or active shot beats.
+- **📤 Media File Uploader (`POST /api/upload`)**: Uploads reference video clips, Canva slide deck stills, and B-roll directly into `uploads/`.
 
 ---
 

@@ -204,20 +204,6 @@ class StudioRequestHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=BASE_DIR, **kwargs)
 
-    def translate_path(self, path):
-        import posixpath
-        path = path.split('?', 1)[0].split('#', 1)[0]
-        path = posixpath.normpath(urllib.parse.unquote(path))
-        words = [w for w in path.split('/') if w]
-        full_path = BASE_DIR
-        for word in words:
-            if os.path.dirname(word) or word in (os.curdir, os.pardir):
-                continue
-            full_path = os.path.join(full_path, word)
-        if path.endswith('/') or not words:
-            full_path = os.path.join(full_path, 'index.html') if os.path.isdir(full_path) else full_path
-        return full_path
-
     def end_headers(self):
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
@@ -352,8 +338,31 @@ class StudioRequestHandler(SimpleHTTPRequestHandler):
             self.send_json_response({"ok": True, "uploads": uploaded_files})
             return
 
-        # Serve static file
-        super().do_GET()
+        # Serve static file directly
+        rel_clean = path.lstrip('/')
+        if not rel_clean:
+            rel_clean = 'index.html'
+        file_path = os.path.join(BASE_DIR, rel_clean)
+        if os.path.isdir(file_path):
+            file_path = os.path.join(file_path, 'index.html')
+
+        if os.path.exists(file_path) and os.path.isfile(file_path):
+            content_type, _ = mimetypes.guess_type(file_path)
+            content_type = content_type or "application/octet-stream"
+            with open(file_path, "rb") as f:
+                content = f.read()
+            self.send_response(200)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Content-Length", str(len(content)))
+            self.end_headers()
+            if self.command != "HEAD":
+                self.wfile.write(content)
+            return
+
+        self.send_response(404)
+        self.send_header("Content-Type", "text/plain")
+        self.end_headers()
+        self.wfile.write(b"404 Not Found")
 
     def do_POST(self):
         parsed = urllib.parse.urlparse(self.path)
@@ -929,7 +938,7 @@ class StudioRequestHandler(SimpleHTTPRequestHandler):
         }
 
 
-def find_free_port(start_port=8765, max_attempts=10):
+def find_free_port(start_port=8775, max_attempts=20):
     import socket
     for port in range(start_port, start_port + max_attempts):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -941,7 +950,7 @@ def find_free_port(start_port=8765, max_attempts=10):
 def main():
     parser = argparse.ArgumentParser(description="Start the August Video Production Workbench Server.")
     parser.add_argument("--host", default="0.0.0.0", help="Host interface to bind")
-    parser.add_argument("--port", type=int, default=int(os.environ.get("PORT", 8765)), help="Port to bind")
+    parser.add_argument("--port", type=int, default=int(os.environ.get("PORT", 8775)), help="Port to bind")
     args = parser.parse_args()
 
     port = args.port
