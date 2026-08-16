@@ -157,11 +157,36 @@
     });
 
     async function loadGallery() {
+      allMediaItems = [];
+      let data = null;
+
+      // 1. Try API
       try {
         const res = await fetch("/api/manifests");
-        const data = await res.json();
-        allMediaItems = [];
+        if (res.ok) {
+          data = await res.json();
+        }
+      } catch (e) {
+        console.warn("API manifests unavailable, falling back to static JSON files");
+      }
 
+      // 2. Fallback to direct static JSON files
+      if (!data) {
+        try {
+          const [stillsRes, videoRes] = await Promise.all([
+            fetch("stills/images_manifest.json").catch(() => null),
+            fetch("video_flow/video_flow_manifest.json").catch(() => null)
+          ]);
+          data = {
+            stills: stillsRes && stillsRes.ok ? await stillsRes.json() : [],
+            video_flow: videoRes && videoRes.ok ? await videoRes.json() : { files: [] }
+          };
+        } catch (e) {
+          console.error("Static files failed to load", e);
+        }
+      }
+
+      if (data) {
         // Add stills
         (data.stills || []).forEach(s => {
           allMediaItems.push({
@@ -187,11 +212,9 @@
             });
           });
         }
-
-        renderGallery(allMediaItems);
-      } catch(e) {
-        console.error(e);
       }
+
+      renderGallery(allMediaItems);
     }
 
     function applyFilter(filter) {

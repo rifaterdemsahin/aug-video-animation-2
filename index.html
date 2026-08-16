@@ -3,100 +3,330 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>August Video Animation #2 — Reverse Response Production Studio</title>
+  <title>Studio Master Dashboard — August Video Animation #2</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .dashboard-hub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .hub-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all var(--transition-fast);
+      position: relative;
+      overflow: hidden;
+    }
+    .hub-card:hover {
+      border-color: var(--accent-blue);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .hub-card-step {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .hub-card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-primary);
+    }
+    .hub-card-desc {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+    .hub-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+  </style>
 </head>
 <body>
   <header class="app-header"></header>
 
   <main class="app-container">
+    <!-- View Header -->
     <div class="view-header">
       <div class="view-title-group">
-        <h1>⚡ Reverse Response Video Studio</h1>
-        <p>End-to-end multimedia production workbench: Reverse engineering viral response formats with your Second Brain.</p>
+        <h1>🏠 Studio Production Control Dashboard</h1>
+        <p>Deterministic 10-step multimedia workflow: From second-by-second reverse research to final 4K delivery.</p>
       </div>
       <div class="header-actions">
-        <a href="research.html" class="btn btn-primary">Open Master Studio 🎬</a>
-        <a href="timeline.html" class="btn btn-purple">Sequencer Timeline ⏱️</a>
+        <a href="research.html" class="btn btn-primary">Start Step 1: Research 🎬</a>
+        <button class="btn" id="btn-dashboard-sync">☁️ Sync All State</button>
       </div>
     </div>
 
-    <!-- Quick Stats Grid -->
+    <!-- Quick Stats Metric Ribbon -->
     <div class="grid-4" style="margin-bottom: 2rem;">
       <div class="card">
         <div class="card-header">
-          <span class="card-title">🎥 Video Flow Clips</span>
-          <span class="badge badge-purple">26 / 26 Active</span>
+          <span class="card-title">🎬 Workflow Sequence</span>
+          <span class="badge badge-green">10 Modules</span>
         </div>
-        <div style="font-size: 2rem; font-weight: 800; color: var(--accent-purple);">26 Clips</div>
-        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem;">AI Google Flow animated scenes with poster frames.</p>
+        <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent-green);">10 Steps</div>
+        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem;">Deterministic step-by-step pipeline.</p>
       </div>
 
       <div class="card">
         <div class="card-header">
-          <span class="card-title">🖼️ Production Stills</span>
-          <span class="badge badge-blue">16 Stages</span>
+          <span class="card-title">🧠 Second Brain</span>
+          <span class="badge badge-purple">Manual Triggers</span>
         </div>
-        <div style="font-size: 2rem; font-weight: 800; color: var(--accent-blue);" id="stat-stills-count">18 Assets</div>
-        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem;">Stage 00 (Index) through Stage 15 (Tactics) slide manifests.</p>
+        <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent-purple);">Active</div>
+        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem;">Obsidian fuzzy index & note injection.</p>
       </div>
 
       <div class="card">
         <div class="card-header">
-          <span class="card-title">🎙️ Target Spoken Pace</span>
-          <span class="badge badge-green">Optimal</span>
+          <span class="card-title">🎥 Video Flow Assets</span>
+          <span class="badge badge-blue">26 Clips</span>
         </div>
-        <div style="font-size: 2rem; font-weight: 800; color: var(--accent-green);">140 WPM</div>
-        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem;">Calibrated for maximum YouTube engagement and retention.</p>
+        <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent-blue);">26 Flow MPs</div>
+        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem;">AI generated visual scenes.</p>
       </div>
 
       <div class="card">
         <div class="card-header">
-          <span class="card-title">☁️ Persistence & Snapshots</span>
-          <span class="badge badge-gold" id="stat-sync-status">Local & Azure</span>
+          <span class="card-title">🎙️ Pacing Target</span>
+          <span class="badge badge-gold">140 WPM</span>
         </div>
-        <div style="font-size: 2rem; font-weight: 800; color: var(--accent-gold);">HMAC-SHA256</div>
-        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem;">Automatic snapshot backups & offline-first browser storage.</p>
+        <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent-gold);">Optimal</div>
+        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem;">Calibrated for maximum YouTube retention.</p>
       </div>
     </div>
 
-    <!-- Section 10: Reverse Response Video Spotlight -->
-    <div class="card" style="margin-bottom: 2rem; background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-surface-elevated) 100%);">
-      <div class="card-header">
-        <span class="card-title">🎯 Section 10: Selected Reverse Response Reference Video</span>
-        <span class="badge badge-red">Viral Breakdown Anchor</span>
-      </div>
-      <div class="grid-2">
+    <!-- Master 10-Step Workflow Dashboard Hub Grid -->
+    <h2 style="font-size: 1.3rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+      <span>🌐 Complete Studio Navigation Directory</span>
+      <span class="badge badge-blue">All 10 Links</span>
+    </h2>
+
+    <div class="dashboard-hub-grid">
+      <!-- 1. Research -->
+      <div class="hub-card" style="border-top: 3px solid var(--accent-blue);">
         <div>
-          <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem;">Reverse Engineering Concept</h3>
-          <p style="color: var(--text-secondary); margin-bottom: 1rem;">
-            A reverse response video analyzes a proven, high-performing video structure second-by-second and re-fits it to our specific niche (Obsidian Second Brain, AI Agents, and Automated Workflows).
+          <div class="hub-card-step" style="color: var(--accent-blue);">
+            <span>Step 01 • Production Foundation</span>
+            <span class="badge badge-blue">Anchor</span>
+          </div>
+          <div class="hub-card-title">🎬 1. Research & Master Studio</div>
+          <p class="hub-card-desc">
+            Second-by-second reference video analysis, <strong>manually triggered Second Brain vault search & note injection</strong>, vertical shot cards, and direct video uploader.
           </p>
-          <ul style="color: var(--text-secondary); padding-left: 1.25rem; margin-bottom: 1.5rem; line-height: 1.8;">
-            <li><strong>Second-by-Second Breakdown:</strong> Every hook, retention drop-off gate, and transition mapped in <a href="research.html" style="color: var(--accent-blue);">Master Research Studio</a>.</li>
-            <li><strong>Second Brain Relational Linking:</strong> Connect your personal Obsidian vault thoughts directly to script beats.</li>
-            <li><strong>Direct Asset & Video Upload:</strong> Upload raw reference clips, B-roll, and audio directly into the project repository.</li>
-          </ul>
-          <div style="display: flex; gap: 0.75rem;">
-            <a href="research.html" class="btn btn-primary">Launch Research & Upload 📤</a>
-            <a href="script_guru.html" class="btn">Analyze Script Retention 🧠</a>
+        </div>
+        <div>
+          <div class="hub-card-footer">
+            <span><code>research.html</code></span>
+            <a href="research.html" class="btn btn-sm btn-primary">Open Research →</a>
           </div>
         </div>
-        <div style="background: rgba(0,0,0,0.3); border-radius: var(--radius-md); padding: 1rem; border: 1px dashed var(--border-color); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-          <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎬</div>
-          <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Reference Video Multi-Track Player</h4>
-          <p style="color: var(--text-muted); font-size: 0.85rem; max-width: 320px; margin-bottom: 1rem;">
-            Load reference MP4 or connect YouTube timestamped nodes to synchronize pacing with your live shotlist.
+      </div>
+
+      <!-- 2. Script Guru -->
+      <div class="hub-card" style="border-top: 3px solid var(--accent-purple);">
+        <div>
+          <div class="hub-card-step" style="color: var(--accent-purple);">
+            <span>Step 02 • AI Script Optimization</span>
+            <span class="badge badge-purple">OpenRouter</span>
+          </div>
+          <div class="hub-card-title">🧠 2. Script Guru AI Coach</div>
+          <p class="hub-card-desc">
+            Live speech cadence analysis, reading ease diagnostics, engagement hook density evaluator, and GPT-4o-mini voiceover script refinement.
           </p>
-          <a href="research.html" class="btn btn-sm btn-purple">Open Video Sync Workbench</a>
+        </div>
+        <div>
+          <div class="hub-card-footer">
+            <span><code>script_guru.html</code></span>
+            <a href="script_guru.html" class="btn btn-sm btn-purple">Open Script Guru →</a>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- 16-Stage Pipeline Catalog Overview -->
-    <h2 style="font-size: 1.3rem; margin-bottom: 1rem;">16-Stage Video Production Pipeline</h2>
-    <div class="grid-16" id="pipeline-stages-grid">
-      <!-- Generated via JS -->
+      <!-- 3. Scenes -->
+      <div class="hub-card" style="border-top: 3px solid var(--accent-gold);">
+        <div>
+          <div class="hub-card-step" style="color: var(--accent-gold);">
+            <span>Step 03 • Macro Architecture</span>
+            <span class="badge badge-gold">6 Scenes</span>
+          </div>
+          <div class="hub-card-title">📑 3. Scene Breakdown</div>
+          <p class="hub-card-desc">
+            Macro narrative architecture across 6 main scenes, target word count tracking, duration envelopes, and color-coded scene cards.
+          </p>
+        </div>
+        <div>
+          <div class="hub-card-footer">
+            <span><code>scenes.html</code></span>
+            <a href="scenes.html" class="btn btn-sm">Open Scenes →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Shotlist -->
+      <div class="hub-card" style="border-top: 3px solid var(--accent-green);">
+        <div>
+          <div class="hub-card-step" style="color: var(--accent-green);">
+            <span>Step 04 • High-Density Data Grid</span>
+            <span class="badge badge-green">Editable</span>
+          </div>
+          <div class="hub-card-title">📊 4. Shotlist Data Grid</div>
+          <p class="hub-card-desc">
+            High-density data table for rapid inline editing, duration calculations, batch tagging, status tracking, and CSV/JSON export.
+          </p>
+        </div>
+        <div>
+          <div class="hub-card-footer">
+            <span><code>shotlist.html</code></span>
+            <a href="shotlist.html" class="btn btn-sm btn-success">Open Shotlist →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Timeline -->
+      <div class="hub-card" style="border-top: 3px solid var(--accent-blue);">
+        <div>
+          <div class="hub-card-step" style="color: var(--accent-blue);">
+            <span>Step 05 • Sequencer & Scrubber</span>
+            <span class="badge badge-blue">Interactive</span>
+          </div>
+          <div class="hub-card-title">⏱️ 5. Visual Timeline</div>
+          <p class="hub-card-desc">
+            Gantt-style horizontal visual timeline displaying scenes 1–6, shot duration blocks, audio waveform alignment, and interactive scrubber.
+          </p>
+        </div>
+        <div>
+          <div class="hub-card-footer">
+            <span><code>timeline.html</code></span>
+            <a href="timeline.html" class="btn btn-sm">Open Timeline →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Voiceover -->
+      <div class="hub-card" style="border-top: 3px solid var(--accent-red);">
+        <div>
+          <div class="hub-card-step" style="color: var(--accent-red);">
+            <span>Step 06 • Teleprompter & Recording</span>
+            <span class="badge badge-red">Audio Studio</span>
+          </div>
+          <div class="hub-card-title">🎙️ 6. Voiceover Teleprompter</div>
+          <p class="hub-card-desc">
+            Large-type teleprompter screen with adjustable font, live speaking cadence meter, sentence-by-sentence recording checklist, and Web Audio playback.
+          </p>
+        </div>
+        <div>
+          <div class="hub-card-footer">
+            <span><code>voice_over.html</code></span>
+            <a href="voice_over.html" class="btn btn-sm">Open Voiceover →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Gallery -->
+      <div class="hub-card" style="border-top: 3px solid var(--accent-purple);">
+        <div>
+          <div class="hub-card-step" style="color: var(--accent-purple);">
+            <span>Step 07 • Media Asset Catalog</span>
+            <span class="badge badge-purple">130+ Assets</span>
+          </div>
+          <div class="hub-card-title">🖼️ 7. Media Gallery</div>
+          <p class="hub-card-desc">
+            Visual media catalog containing all 16-stage slide stills (Stages 00–15) and 26 Google Flow animated video clips with filter chips and modal preview.
+          </p>
+        </div>
+        <div>
+          <div class="hub-card-footer">
+            <span><code>gallery.html</code></span>
+            <a href="gallery.html" class="btn btn-sm btn-purple">Open Gallery →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. Tactics -->
+      <div class="hub-card" style="border-top: 3px solid var(--accent-gold);">
+        <div>
+          <div class="hub-card-step" style="color: var(--accent-gold);">
+            <span>Step 08 • SOPs & Quality Gates</span>
+            <span class="badge badge-gold">DaVinci 4K</span>
+          </div>
+          <div class="hub-card-title">⚔️ 8. Tactics & SOPs</div>
+          <p class="hub-card-desc">
+            Standard operating procedures, 4K ProRes render settings, Git 24MB large-media splitting pipelines, and production release checklist.
+          </p>
+        </div>
+        <div>
+          <div class="hub-card-footer">
+            <span><code>tactic.html</code></span>
+            <a href="tactic.html" class="btn btn-sm">Open Tactics →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. Analytics -->
+      <div class="hub-card" style="border-top: 3px solid var(--accent-green);">
+        <div>
+          <div class="hub-card-step" style="color: var(--accent-green);">
+            <span>Step 09 • Pacing & Retention</span>
+            <span class="badge badge-green">Metrics</span>
+          </div>
+          <div class="hub-card-title">📈 9. Production Analytics</div>
+          <p class="hub-card-desc">
+            Runtime analysis across scenes 1–6, simulated YouTube audience retention drop-off curves, word distribution charts, and printable reports.
+          </p>
+        </div>
+        <div>
+          <div class="hub-card-footer">
+            <span><code>analysis.html</code></span>
+            <a href="analysis.html" class="btn btn-sm">Open Analytics →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. Studio Overview -->
+      <div class="hub-card" style="border-top: 3px solid var(--accent-pink);">
+        <div>
+          <div class="hub-card-step" style="color: var(--accent-pink);">
+            <span>Step 10 • Control Central</span>
+            <span class="badge badge-pink">Overview</span>
+          </div>
+          <div class="hub-card-title">🏠 10. Studio Overview</div>
+          <p class="hub-card-desc">
+            This central control station, connecting all 10 modules, persistence engines, cloud snapshots, and animated Roger Rabbit outro signature.
+          </p>
+        </div>
+        <div>
+          <div class="hub-card-footer">
+            <span><code>index.html</code></span>
+            <a href="index.html" class="btn btn-sm">Active Hub</a>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -106,37 +336,9 @@
       studio.injectHeaderAndFooter("index");
       await studio.loadState();
 
-      const stages = [
-        { id: "00", name: "Index", icon: "📑", desc: "Framework topology and master blueprint" },
-        { id: "01", name: "Architecture", icon: "🏗️", desc: "Full-stack system and cloud infrastructure" },
-        { id: "02", name: "Plan", icon: "📝", desc: "Script deck slides & 20-beat narrative" },
-        { id: "03", name: "Assets", icon: "🗂️", desc: "Obsidian notes and vault entity counts" },
-        { id: "04", name: "Cohort", icon: "👥", desc: "Audience insights and community feedback" },
-        { id: "05", name: "Gaps", icon: "🧩", desc: "Concept gap analysis and mind mapping" },
-        { id: "06", name: "Assembly", icon: "🎬", desc: "Scene-by-scene storyboard synchronization" },
-        { id: "07", name: "Polish", icon: "✨", desc: "Kinetic micro-transitions and rhythm" },
-        { id: "08", name: "Refinement", icon: "🔍", desc: "Spoken cadence & WPM alignment checks" },
-        { id: "09", name: "Audio", icon: "🎙️", desc: "Voiceover mastering and EQ balance" },
-        { id: "10", name: "EditColor", icon: "🎨", desc: "Cinematic LUT profiles and color grading" },
-        { id: "11", name: "Thumbnail", icon: "🖼️", desc: "A/B high CTR thumbnail compositions" },
-        { id: "12", name: "Export", icon: "🚀", desc: "4K ProRes / 1080p 60fps render settings" },
-        { id: "13", name: "Metadata", icon: "🏷️", desc: "YouTube SEO chapters and tags" },
-        { id: "14", name: "Large Media", icon: "📦", desc: "24MB binary chunk splitting & rejoining" },
-        { id: "15", name: "Tactics", icon: "⚔️", desc: "Standard operating procedures & quality gates" }
-      ];
-
-      const container = document.getElementById("pipeline-stages-grid");
-      container.innerHTML = stages.map(s => `
-        <div class="card" style="padding: 1rem;">
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
-            <span style="font-size: 1.5rem;">${s.icon}</span>
-            <span class="badge badge-blue">Stage ${s.id}</span>
-          </div>
-          <h4 style="font-weight: 700; margin-bottom: 0.25rem;">${s.name}</h4>
-          <p style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 0.75rem;">${s.desc}</p>
-          <a href="gallery.html?stage=${s.id}" class="btn btn-sm" style="width: 100%;">View Stage Assets</a>
-        </div>
-      `).join("");
+      document.getElementById("btn-dashboard-sync").addEventListener("click", () => {
+        studio.syncToCloud();
+      });
     });
   </script>
 </body>
