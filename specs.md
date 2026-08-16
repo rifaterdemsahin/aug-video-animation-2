@@ -1,7 +1,7 @@
 # August Video Animation #1 — Complete Reverse-Engineered System Specification
 
 > **Document Version:** 1.0.0  
-> **Target Project:** `aug-video-animation-1` ("AI Second Brain" Video Production Studio & Workbench)  
+> **Target Project:** `aug-video-animation-2` ("Reverse Response Video" Video Production Studio & Workbench)  
 > **Author / Original Creator:** Rifat Erdem Sahin / DeliveryPilot  
 > **Output:** Single-document complete technical specification and blueprint to recreate the entire system from scratch.
 
@@ -41,7 +41,8 @@
 
 ## 1. Executive Summary & System Purpose
 
-`aug-video-animation-1` is an end-to-end multimedia production studio and interactive web workbench designed to produce a **2:58 animated video titled "AI Second Brain"**.
+`aug-video-animation-2` is an end-to-end multimedia production studio and interactive web workbench designed to produce a **response reverse video**.
+- Response reverse video is reverse engineering a popular video and fitting it to our niche. 
 
 The application bridges the gap between raw pre-production assets (Canva slide decks, Obsidian knowledge bases, 26 Google Flow AI-generated video clips, and voiceover scripts) and final video assembly. It delivers:
 1. **Interactive Shotlist & Storyboard Editor**: Visual scene-by-scene editing, tagging, timing calculators, and status tracking.
@@ -104,7 +105,7 @@ The application bridges the gap between raw pre-production assets (Canva slide d
 ## 3. Repository Structure & File Topology
 
 ```
-aug-video-animation-1/
+aug-video-animation-2/
 ├── .dockerignore                            # Excludes git, cache, raw videos from Docker build
 ├── .gitignore                               # Ignores large raw files, venvs, caches
 ├── .nojekyll                                # Disables GitHub Pages Jekyll preprocessing
@@ -167,7 +168,7 @@ An array of objects indexing all static visual assets:
     "file": "stills/02_plan/02_plan_00_cover-title.png",
     "stage": "02",
     "stageName": "Plan",
-    "caption": "Title card: \"AI Second Brain Video Script — Complete Production Guide.\"",
+    "caption": "Title card: \"\"",
     "voiceoverDefault": true
   }
 ]
@@ -529,6 +530,15 @@ To reproduce this entire repository from zero:
 6. **Configure Containerization & Cloud Deployment**:
    - Create `Dockerfile` and `fly.toml`.
    - Test locally with `python3 server.py` on `http://127.0.0.1:8765`.
+
+## 10. Reverse Reponse Video
+- A popular video that is selected. Would be mentioned here. I should place the video in this project
+- Would be added to the research by every second
+- We would use our second brain to relate to our experience
+- We would also upload our content as well there needs to be upload feature in the research
+
+## 11. Signature
+- There would be roger rabit style signature at the end with Rifat Erdem Sahin
 
 ---
 *End of Specification Document.*
