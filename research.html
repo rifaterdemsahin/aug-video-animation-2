@@ -97,10 +97,11 @@
   <main class="app-container">
     <div class="view-header">
       <div class="view-title-group">
-        <h1>🎬 1. Master Research Studio</h1>
-        <p>Reverse response reference video breakdown, manual Second Brain note upload & injection, and scene-by-scene storyboard.</p>
+        <h1>🎬 3. Master Research Studio</h1>
+        <p>Reverse response reference video breakdown (from 1. Source & 2. Decision), manual Second Brain note upload & injection, and scene-by-scene storyboard.</p>
       </div>
       <div class="header-actions">
+        <a href="decision.html" class="btn">← 2. Decision</a>
         <button class="btn btn-primary" id="btn-add-shot">+ Add Shot Beat</button>
         <button class="btn btn-purple" id="btn-open-upload">📤 Upload Media / Video</button>
         <button class="btn btn-success" id="btn-save-all">💾 Save All</button>
@@ -113,15 +114,49 @@
         <!-- 1. Reverse Response Video Section -->
         <div class="card" style="margin-bottom: 1.25rem; border-top: 3px solid var(--accent-red);">
           <div class="card-header">
-            <span class="card-title">📹 1. Reverse Video Reference</span>
-            <span class="badge badge-red">Pacing Model</span>
+            <span class="card-title">📹 1. Reverse Response Video Source</span>
+            <span class="badge badge-red">Viral Origin Model</span>
           </div>
           <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
-            Break down the selected popular response video second-by-second:
+            Select a high-metric viral reference to launch your <em>"I build for others"</em> reverse marketing response video:
           </p>
+
+          <!-- Candidate Quick Selector -->
+          <div class="form-group">
+            <label class="form-label" style="display:flex; justify-content:space-between;">
+              <span>Viral Reference Candidates</span>
+              <span class="badge badge-green" style="font-size:0.65rem;">Top Metrics</span>
+            </label>
+            <select class="form-select" id="ref-candidate-select" style="font-size: 0.8rem; padding: 0.4rem; background: var(--bg-surface-elevated); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); width: 100%;">
+              <option value="0">⭐ Candidate 1: ColdFusion — Replacing Humans with AI is Going Horribly Wrong (1.8M views | 5.2M subs)</option>
+              <option value="1">📈 Candidate 2: Economics Explained — The AI Bubble Is Built on a $1T Delusion (2.1M views | 2.8M subs)</option>
+              <option value="2">⚡ Candidate 3: Tech Vision / Fireship — Why 80% of Enterprise AI Projects Fail (2.4M views | 3.2M subs)</option>
+              <option value="3">🔍 Seed Baseline: The Infographics Show — The $7T AI Gamble Is Failing (1.5M views | 15.5M subs)</option>
+            </select>
+          </div>
+
+          <!-- Active Selected Video Info & Reverse Hook -->
+          <div id="active-video-metrics-card" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.75rem; margin-bottom: 0.75rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.35rem;">
+              <strong id="active-candidate-title" style="font-size: 0.85rem; color: var(--accent-red); line-height: 1.3;">Replacing Humans with AI is Going Horribly Wrong</strong>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:0.5rem; font-size:0.7rem;">
+              <span class="tag-pill" id="active-candidate-views">🔥 1.8M+ Views</span>
+              <span class="tag-pill" id="active-candidate-engagement">💬 8,200+ Comments</span>
+              <span class="tag-pill" id="active-candidate-creator">🎙️ ColdFusion (5.2M)</span>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.4rem;">
+              <strong>Viral Concept Hook:</strong> <span id="active-candidate-concept">Massive corporate layoffs to replace employees with generic LLMs caused severe operational failures, support chaos, and reputational damage.</span>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--accent-green); background: rgba(34, 197, 94, 0.08); border-left: 3px solid var(--accent-green); padding: 0.4rem; border-radius: 2px;">
+              <strong>Reverse Response Pitch ("I Build For Others"):</strong><br>
+              <span id="active-candidate-response">"Big Tech fails because they build replacement black boxes. I build customized human-in-the-loop AI automations for businesses that act as force-multipliers with zero hallucination risk."</span>
+            </div>
+          </div>
+
           <div class="form-group">
             <label class="form-label">Reference Title / Topic</label>
-            <input type="text" class="form-input" id="ref-video-title" value="High-Retention AI System Breakdown">
+            <input type="text" class="form-input" id="ref-video-title" value="Replacing Humans with AI is Going Horribly Wrong — ColdFusion">
           </div>
           <div class="form-group">
             <label class="form-label">Second-by-Second Scrubber (0:00 - 3:00)</label>
@@ -133,11 +168,11 @@
             </div>
           </div>
           <div id="ref-beat-highlight" style="padding: 0.6rem; background: var(--bg-surface-elevated); border-radius: var(--radius-sm); font-size: 0.8rem; color: var(--text-secondary); border-left: 3px solid var(--accent-red); margin-bottom: 0.75rem;">
-            Active Beat: Scene 1 Hook & 46k Notes Chaos
+            Active Beat: Scene 1 Hook & Chaos in Production
           </div>
           <div class="form-group" style="margin-bottom: 0;">
-            <label class="form-label">Pattern Takeaways</label>
-            <textarea class="form-textarea" rows="2" placeholder="Note hook technique, pattern interrupt interval, or visual cadence..." style="font-size: 0.8rem;"></textarea>
+            <label class="form-label">Pattern Takeaways & Response Hook</label>
+            <textarea class="form-textarea" id="ref-pattern-takeaways" rows="2" placeholder="Note hook technique, pattern interrupt interval, or visual cadence..." style="font-size: 0.8rem;">Pattern: High-stakes corporate failure hook in first 5s. Response tactic: Contrast their failed $100M generic bot with our lean, deterministic client workflow.</textarea>
           </div>
         </div>
 
@@ -300,6 +335,60 @@
       renderShots(state);
       updatePacingStats(state);
       loadSnapshots();
+
+      // Reverse Response Candidates Data
+      const candidates = [
+        {
+          title: "Replacing Humans with AI is Going Horribly Wrong — ColdFusion",
+          views: "🔥 1.8M+ Views",
+          comments: "💬 8,200+ Comments",
+          creator: "🎙️ ColdFusion (5.2M subs)",
+          concept: "Massive corporate layoffs to replace employees with generic LLMs caused severe operational failures, support chaos, and reputational damage.",
+          response: "\"Big Tech fails because they build replacement black boxes. I build customized human-in-the-loop AI automations for businesses that act as force-multipliers with zero hallucination risk.\"",
+          takeaways: "Pattern: High-stakes corporate failure hook in first 5s. Response tactic: Contrast their failed $100M generic bot with our lean, deterministic client workflow."
+        },
+        {
+          title: "The AI Bubble Is Built on a $1 Trillion Delusion — Economics Explained",
+          views: "🔥 2.1M+ Views",
+          comments: "💬 5,500+ Comments",
+          creator: "📈 Economics Explained (2.8M subs)",
+          concept: "Hyperscalers are pouring hundreds of billions into chip clusters without unit-economic sustainability or paying software customers.",
+          response: "\"Hyperscalers are bleeding cash trying to subsidize chat queries. When I build AI solutions for clients, every workflow generates direct net margin from day 1.\"",
+          takeaways: "Pattern: Macro-economic CapEx crisis hook. Response tactic: Position custom applied software as the profitable antidote to foundation model overspending."
+        },
+        {
+          title: "Why 80% of Enterprise AI Projects Fail — Tech Vision / Fireship",
+          views: "🔥 2.4M+ Views",
+          comments: "💬 7,200+ Comments",
+          creator: "⚡ Tech Vision & Fireship (3.2M subs)",
+          concept: "80% to 90% of AI pilot projects stall in 'Proof of Concept' purgatory because generic LLMs lack deterministic data integration, state persistence, and enterprise business context.",
+          response: "\"Enterprise AI fails because they try to connect raw LLM APIs directly to messy legacy databases. I build deterministic MCP toolchains, local state persistence, and guardrailed pipelines for clients.\"",
+          takeaways: "Pattern: Frustrated developer & CTO relatable agony hook. Response tactic: Demonstrate your proven 16-stage deterministic pipeline live."
+        },
+        {
+          title: "The $7T AI Gamble Is Failing. Big Tech is TRAPPED Right NOW — The Infographics Show",
+          views: "🔥 1.5M Views (5d)",
+          comments: "💬 4,025 Comments",
+          creator: "📊 The Infographics Show (15.5M subs)",
+          concept: "Tech CEOs quietly cancelling AI plans because systems are expensive, legally risky, and difficult to control when moving from demos to real world.",
+          response: "\"Tech CEOs are cancelling because bloated demos don't scale. Here is how I build lean, bulletproof AI automation systems for client workflows with zero legal risk.\"",
+          takeaways: "Pattern: Dramatic geopolitical & corporate panic hook. Response tactic: Bridge from Big Tech trap to agile client-built automation mastery."
+        }
+      ];
+
+      const candSelect = document.getElementById("ref-candidate-select");
+      candSelect.addEventListener("change", (e) => {
+        const c = candidates[parseInt(e.target.value)] || candidates[0];
+        document.getElementById("active-candidate-title").textContent = c.title;
+        document.getElementById("active-candidate-views").textContent = c.views;
+        document.getElementById("active-candidate-engagement").textContent = c.comments;
+        document.getElementById("active-candidate-creator").textContent = c.creator;
+        document.getElementById("active-candidate-concept").textContent = c.concept;
+        document.getElementById("active-candidate-response").textContent = c.response;
+        document.getElementById("ref-video-title").value = c.title;
+        document.getElementById("ref-pattern-takeaways").value = c.takeaways;
+        studio.toast(`Switched reference to: ${c.title.substring(0, 32)}...`, "info");
+      });
 
       // Scrubber interaction
       const scrubber = document.getElementById("ref-video-scrubber");

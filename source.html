@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1. Source Video Comparison & Math Conversion Hub — August Video Animation #2</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .candidate-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: all var(--transition-fast);
+    }
+    .candidate-card:hover {
+      border-color: var(--accent-blue);
+      box-shadow: var(--shadow-md);
+    }
+    .candidate-card.selected {
+      border: 2px solid var(--accent-green);
+      background: rgba(34, 197, 94, 0.03);
+    }
+    .candidate-card.math-winner {
+      border: 2px solid #ff7a00;
+    }
+    .candidate-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+      gap: 0.5rem;
+    }
+    .candidate-rank {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+    }
+    .math-score-badge {
+      display: flex;
+      align-items: baseline;
+      gap: 0.25rem;
+      background: rgba(255, 122, 0, 0.12);
+      border: 1px solid #ff7a00;
+      color: #ff7a00;
+      padding: 0.35rem 0.65rem;
+      border-radius: var(--radius-sm);
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+    .video-embed-wrap {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+      height: 0;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+      background: #000;
+      border: 1px solid var(--border-color);
+    }
+    .video-embed-wrap iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .source-url-bar {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 0.6rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+    }
+    .source-link-text {
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+    .source-link-text:hover {
+      text-decoration: underline;
+    }
+    .metrics-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.85rem;
+    }
+    .metric-pill {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.5rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .metric-pill strong {
+      color: var(--text-primary);
+    }
+    .math-breakdown-bar {
+      margin-bottom: 0.85rem;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem;
+      font-size: 0.75rem;
+    }
+    .sub-score-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.3rem;
+    }
+    .sub-score-row:last-child {
+      margin-bottom: 0;
+    }
+    .bar-track {
+      height: 4px;
+      background: var(--bg-surface);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 2px;
+      margin-bottom: 4px;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+    .concept-box {
+      background: var(--bg-surface-elevated);
+      border-left: 3px solid var(--accent-red);
+      padding: 0.65rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      line-height: 1.45;
+      margin-bottom: 0.75rem;
+      color: var(--text-secondary);
+    }
+    .reverse-pitch-box {
+      background: rgba(34, 197, 94, 0.08);
+      border-left: 3px solid var(--accent-green);
+      padding: 0.65rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      line-height: 1.45;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+    }
+    .matrix-table th, .matrix-table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .matrix-table th {
+      background: var(--bg-surface-elevated);
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+    .formula-callout {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header"></header>
+
+  <main class="app-container">
+    <div class="view-header">
+      <div class="view-title-group">
+        <h1>📹 1. Source Video Comparison & Embedded Player Hub</h1>
+        <p>Preview embedded viral videos, verify direct source links, and evaluate candidates using our quantitative <strong>Skool Conversion Index (SCI)</strong>.</p>
+      </div>
+      <div class="header-actions">
+        <a href="decision.html" class="btn btn-primary" id="btn-proceed-decision">Lock Selection & Go to 2. Decision 🎯</a>
+      </div>
+    </div>
+
+    <!-- Strategy & Skool Target Banner -->
+    <div class="card" style="margin-bottom: 1.5rem; border-left: 4px solid #ff7a00; background: rgba(255, 122, 0, 0.05);">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.35rem;">
+        <h3 style="font-size: 1rem; margin: 0; color: #ff7a00; display: flex; align-items: center; gap: 0.5rem;">
+          <span>🎯 End-Game Funnel Target: Delivery Pilot Skool Community</span>
+        </h3>
+        <a href="https://www.skool.com/delivery-pilot-8938" target="_blank" class="badge" style="background:#ff7a00; color:#fff; text-decoration:none; padding:0.25rem 0.6rem;">
+          🎓 Target Destination: skool.com/delivery-pilot-8938 ↗
+        </a>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+        We reverse-engineer high-view macro videos into <em>"Here is how I build practical AI client solutions"</em> to funnel high-intent builders, CTOs, and founders into the <strong>Delivery Pilot Skool</strong> for templates, blueprints, and co-building.
+      </p>
+    </div>
+
+    <!-- 🧮 Math-Based Scoring Formula Box -->
+    <div class="formula-callout">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem;">
+        <div style="font-weight: 800; color: var(--accent-blue); font-size: 0.95rem;">
+          📐 Mathematical Model: Skool Conversion Index (SCI)
+        </div>
+        <span class="badge badge-gold">Deterministic Scoring Formula</span>
+      </div>
+      
+      <div style="background: var(--bg-surface); padding: 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); color: var(--text-primary); margin-bottom: 0.75rem; font-size: 0.9rem;">
+        $$\mathbf{SCI} = \Big( \mathbf{w_1} \cdot V_{\text{viral}} + \mathbf{w_2} \cdot E_{\text{friction}} + \mathbf{w_3} \cdot C_{\text{contrast}} + \mathbf{w_4} \cdot B_{\text{builder\_intent}} \Big) \times 10$$
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.75rem; font-size: 0.75rem; color: var(--text-secondary);">
+        <div><strong>w₁ = 25% (Viral Reach V):</strong> Views, velocity & algorithm momentum.</div>
+        <div><strong>w₂ = 20% (Friction E):</strong> Comment anger density & AI failure pain.</div>
+        <div><strong>w₃ = 25% (Contrast Pivot C):</strong> Ease of "I build for others" flip.</div>
+        <div><strong>w₄ = 30% (Builder Intent B):</strong> % of audience seeking blueprints & Skool.</div>
+      </div>
+    </div>
+
+    <!-- Mathematical Winner Summary Banner -->
+    <div class="card" id="math-winner-banner" style="margin-bottom: 2rem; border-left: 4px solid var(--accent-green); background: rgba(34, 197, 94, 0.05);">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.35rem;">
+        <h3 style="font-size: 1.05rem; margin: 0; color: var(--accent-green); display: flex; align-items: center; gap: 0.5rem;">
+          <span>🏆 Mathematical Recommendation for Skool Conversion:</span>
+          <span id="winner-title-text" style="color:var(--text-primary);">Replacing Humans with AI is Going Horribly Wrong</span>
+        </h3>
+        <span class="badge badge-green" id="winner-score-badge" style="font-size:0.85rem; padding:0.3rem 0.65rem;">SCI: 95.1 / 100</span>
+      </div>
+      <p id="winner-explanation-text" style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+        <strong>Why it wins the math:</strong> With <strong>1.82M+ views</strong> and <strong>8,200+ comments</strong>, the audience is deeply frustrated with black-box chatbots replacing workers. Our reverse pitch (<em>"We build human-in-the-loop force multipliers"</em>) has an exceptional <strong>9.7/10 Builder Intent ($B$)</strong>, funneling founders and operators directly into the <strong>Delivery Pilot Skool</strong> to download the deterministic client architecture.
+      </p>
+    </div>
+
+    <!-- Candidate Cards Grid with Video Embeds -->
+    <h2 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 1rem;">Candidate Scorecard & Embedded Players</h2>
+    <div class="source-grid" id="candidate-cards-container">
+      <!-- Generated via JS -->
+    </div>
+
+    <!-- Deep-Dive Comparison Matrix -->
+    <div class="card" style="margin-bottom: 2rem;">
+      <div class="card-header">
+        <span class="card-title">📊 Multi-Dimensional Mathematical Scorecard & Source Links</span>
+        <span class="badge badge-purple">Math Proof Matrix</span>
+      </div>
+      <div style="overflow-x: auto;">
+        <table class="matrix-table">
+          <thead>
+            <tr>
+              <th>Rank & Candidate</th>
+              <th>Channel</th>
+              <th>Direct Video Source Link</th>
+              <th>Viral (V)</th>
+              <th>Friction (E)</th>
+              <th>Contrast (C)</th>
+              <th>Builder (B)</th>
+              <th>SCI Score</th>
+              <th>Conversion Forecast</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="matrix-table-body">
+            <!-- Populated via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    const candidates = [
+      {
+        id: "cand-1",
+        title: "Replacing Humans with AI is Going Horribly Wrong",
+        creator: "ColdFusion",
+        subscribers: "5.2M subscribers",
+        views: "1.82M+ views",
+        engagement: "8,200+ comments • 92k likes",
+        youtubeId: "QX1Xwzm9yHY",
+        url: "https://www.youtube.com/watch?v=QX1Xwzm9yHY",
+        tag: "🏆 #1 Highest Skool Fit",
+        rankBadge: "badge-green",
+        isMathWinner: true,
+        vScore: 9.3,
+        eScore: 9.4,
+        cScore: 9.6,
+        bScore: 9.7,
+        originConcept: "Massive corporate layoffs replacing whole departments with raw chatbots led to hallucination catastrophes, support backlashes, customer churn, and multimillion-dollar losses.",
+        reverseAngle: "Big Tech failed because they tried to replace employees overnight with generic black-box chatbots. When I build AI solutions for clients, we build deterministic human-in-the-loop force multipliers that enhance workers with zero hallucination risk.",
+        takeaway: "High-stakes corporate disaster hook in first 5s. Direct pipeline to Delivery Pilot Skool to download our deterministic client blueprint."
+      },
+      {
+        id: "cand-3",
+        title: "Why Building AI Data Centres Isn’t Working Anymore",
+        creator: "ColdFusion",
+        subscribers: "5.2M subscribers",
+        views: "1.43M+ views",
+        engagement: "6,800+ comments • 74k likes",
+        youtubeId: "eXXwN_TDdLU",
+        url: "https://www.youtube.com/watch?v=eXXwN_TDdLU",
+        tag: "🥈 Rank #2 (Infrastructure Gap)",
+        rankBadge: "badge-purple",
+        isMathWinner: false,
+        vScore: 8.8,
+        eScore: 8.9,
+        cScore: 9.2,
+        bScore: 9.0,
+        originConcept: "Big Tech is pouring billions into GPU energy grids, yet businesses cannot find viable economic returns for enterprise software workloads.",
+        reverseAngle: "Massive foundation models burn megawatts subsidizing chat queries. I build lean, localized AI agent workflows that run on lightweight compute and deliver immediate net profit for clients.",
+        takeaway: "Energy and CapEx bottleneck hook. Positions custom automation as the low-cost high-efficiency alternative."
+      },
+      {
+        id: "cand-2",
+        title: "MIT Just Found The Cause Of The AI Bubble",
+        creator: "Economics Explained",
+        subscribers: "2.8M subscribers",
+        views: "733k+ views",
+        engagement: "4,200+ comments • 35k likes",
+        youtubeId: "1zlD0K09IKE",
+        url: "https://www.youtube.com/watch?v=1zlD0K09IKE",
+        tag: "🥉 Rank #3 (Economic Model)",
+        rankBadge: "badge-gold",
+        isMathWinner: false,
+        vScore: 8.2,
+        eScore: 7.9,
+        cScore: 8.4,
+        bScore: 7.6,
+        originConcept: "Academic research reveals a disconnect between massive enterprise AI investment and measurable macroeconomic productivity improvements.",
+        reverseAngle: "Generic AI fails the productivity test because it lacks workflow context. When I build for others, we integrate local state persistence and deterministic task gates that measure real ROI.",
+        takeaway: "Academic/MIT research authority hook. Converts analytical business leaders looking for grounded implementations."
+      },
+      {
+        id: "cand-4",
+        title: "The 7 Trillion AI Gamble Is Failing. Big Tech is TRAPPED Right NOW",
+        creator: "The Infographics Show",
+        subscribers: "15.5M subscribers",
+        views: "1.51M views (5 days)",
+        engagement: "4,025 comments • 27k likes",
+        youtubeId: "OunJtLnyPT4",
+        url: "https://www.youtube.com/watch?v=OunJtLnyPT4",
+        tag: "Rank #4 (Seed Baseline)",
+        rankBadge: "badge-blue",
+        isMathWinner: false,
+        vScore: 8.6,
+        eScore: 7.2,
+        cScore: 7.5,
+        bScore: 6.2,
+        originConcept: "Tech CEOs quietly cancelling AI plans because systems are expensive, legally risky, and difficult to control once moving from demos into real world.",
+        reverseAngle: "Tech CEOs are cancelling because bloated demos don't scale. Here is how I build lean, bulletproof AI automation systems for client workflows with zero legal risk.",
+        takeaway: "Massive rapid reach (1.5M in 5d), but broad consumer audience results in lower Skool conversion percentage."
+      }
+    ];
+
+    function calculateSCI(c) {
+      const raw = (0.25 * c.vScore) + (0.20 * c.eScore) + (0.25 * c.cScore) + (0.30 * c.bScore);
+      return Math.round(raw * 10 * 10) / 10;
+    }
+
+    let selectedCandidateId = localStorage.getItem("wiganimation_selected_candidate") || "cand-3";
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      studio.injectHeaderAndFooter("source");
+      renderCards();
+      renderMatrix();
+    });
+
+    function selectCandidate(id) {
+      selectedCandidateId = id;
+      localStorage.setItem("wiganimation_selected_candidate", id);
+      const chosen = candidates.find(c => c.id === id);
+      if (studio.state) {
+        studio.state.selectedCandidate = chosen;
+        studio.saveLocalState();
+      }
+      renderCards();
+      renderMatrix();
+      studio.toast(`Selected: ${chosen.title.substring(0, 35)}... (SCI: ${calculateSCI(chosen)})`, "success");
+    }
+
+    function renderCards() {
+      const container = document.getElementById("candidate-cards-container");
+      container.innerHTML = candidates.map(c => {
+        const isSelected = c.id === selectedCandidateId;
+        const sci = calculateSCI(c);
+        return `
+          <div class="candidate-card ${isSelected ? 'selected' : ''} ${c.isMathWinner ? 'math-winner' : ''}" id="card-${c.id}">
+            <div>
+              <div class="candidate-header">
+                <div>
+                  <span class="candidate-rank badge ${c.rankBadge}">${c.tag}</span>
+                  <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">${c.creator} • ${c.subscribers}</div>
+                </div>
+                <div class="math-score-badge" title="Skool Conversion Index (0-100)">
+                  <span>⚡ SCI:</span> <span>${sci}</span>
+                </div>
+              </div>
+
+              <!-- 🎥 Embedded YouTube Video Player -->
+              <div class="video-embed-wrap">
+                <iframe 
+                  src="https://www.youtube-nocookie.com/embed/${c.youtubeId}?rel=0&modestbranding=1" 
+                  title="${c.title}" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowfullscreen
+                  loading="lazy">
+                </iframe>
+              </div>
+
+              <!-- Direct Clickable YouTube Link Bar -->
+              <div class="source-url-bar">
+                <span>🔗 Source:</span>
+                <a href="${c.url}" target="_blank" class="source-link-text" title="Open in new tab: ${c.url}">
+                  ${c.url}
+                </a>
+                <a href="${c.url}" target="_blank" class="btn btn-sm" style="padding: 0.15rem 0.4rem; font-size: 0.7rem; text-decoration: none;">↗</a>
+              </div>
+              
+              <h3 style="font-size: 1.02rem; font-weight: 800; line-height: 1.35; margin-bottom: 0.6rem;">${c.title}</h3>
+              
+              <div class="metrics-pills">
+                <div class="metric-pill"><span>🔥</span> <strong>${c.views}</strong></div>
+                <div class="metric-pill"><span>💬</span> <strong>${c.engagement}</strong></div>
+              </div>
+
+              <!-- Mathematical Sub-Score Breakdown -->
+              <div class="math-breakdown-bar">
+                <div class="sub-score-row">
+                  <span style="color:var(--text-muted);">Viral Reach ($V$ • 25%):</span>
+                  <strong>${c.vScore}/10</strong>
+                </div>
+                <div class="bar-track"><div class="bar-fill" style="width:${c.vScore*10}%; background:var(--accent-blue);"></div></div>
+
+                <div class="sub-score-row">
+                  <span style="color:var(--text-muted);">Pain & Friction ($E$ • 20%):</span>
+                  <strong>${c.eScore}/10</strong>
+                </div>
+                <div class="bar-track"><div class="bar-fill" style="width:${c.eScore*10}%; background:var(--accent-red);"></div></div>
+
+                <div class="sub-score-row">
+                  <span style="color:var(--text-muted);">Contrast Pivot ($C$ • 25%):</span>
+                  <strong>${c.cScore}/10</strong>
+                </div>
+                <div class="bar-track"><div class="bar-fill" style="width:${c.cScore*10}%; background:var(--accent-green);"></div></div>
+
+                <div class="sub-score-row">
+                  <span style="color:#ff7a00; font-weight:700;">Skool Builder Intent ($B$ • 30%):</span>
+                  <strong style="color:#ff7a00;">${c.bScore}/10</strong>
+                </div>
+                <div class="bar-track"><div class="bar-fill" style="width:${c.bScore*10}%; background:#ff7a00;"></div></div>
+              </div>
+
+              <div class="concept-box">
+                <strong style="color: var(--accent-red); display: block; font-size: 0.75rem; margin-bottom: 2px;">🔴 Popular Concept Hook:</strong>
+                ${c.originConcept}
+              </div>
+
+              <div class="reverse-pitch-box">
+                <strong style="color: var(--accent-green); display: block; font-size: 0.75rem; margin-bottom: 2px;">🟢 "I Build for Others" Response:</strong>
+                "${c.reverseAngle}"
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+              <button class="btn ${isSelected ? 'btn-success' : 'btn-primary'}" style="flex: 1; font-size: 0.85rem;" onclick="selectCandidate('${c.id}')">
+                ${isSelected ? '✓ Active Source Pick' : 'Select This Video'}
+              </button>
+              <a href="${c.url}" target="_blank" class="btn" style="text-decoration: none; padding: 0.5rem 0.75rem;" title="Open on YouTube">↗ Watch</a>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderMatrix() {
+      const tbody = document.getElementById("matrix-table-body");
+      tbody.innerHTML = candidates.map(c => {
+        const isSelected = c.id === selectedCandidateId;
+        const sci = calculateSCI(c);
+        const convRating = sci >= 90 ? '🔥 Very High (~12-16%)' : sci >= 80 ? '📈 High (~8-11%)' : sci >= 75 ? '⚡ Moderate (~5-7%)' : '⚪ Standard (~3-4%)';
+        return `
+          <tr style="${isSelected ? 'background: rgba(34, 197, 94, 0.05);' : ''}">
+            <td style="font-weight: 700; color: var(--text-primary);">
+              <span class="badge ${c.rankBadge}" style="font-size:0.65rem; margin-bottom:4px;">${c.tag}</span><br>
+              ${c.title}
+              ${isSelected ? '<br><span class="badge badge-green" style="font-size:0.65rem; margin-top:2px;">Selected</span>' : ''}
+            </td>
+            <td>${c.creator}<br><span style="color:var(--text-muted); font-size:0.75rem;">${c.subscribers}</span></td>
+            <td>
+              <a href="${c.url}" target="_blank" style="color:var(--accent-blue); text-decoration:none; font-family:var(--font-mono); font-size:0.75rem; display:flex; align-items:center; gap:0.25rem;">
+                <span>🔗</span> <span>${c.url}</span>
+              </a>
+            </td>
+            <td><strong>${c.vScore}</strong>/10</td>
+            <td><strong>${c.eScore}</strong>/10</td>
+            <td><strong>${c.cScore}</strong>/10</td>
+            <td><strong style="color:#ff7a00;">${c.bScore}</strong>/10</td>
+            <td><strong style="font-size:1.05rem; color:#ff7a00;">${sci}</strong><span style="font-size:0.75rem; color:var(--text-muted);">/100</span></td>
+            <td><span class="badge badge-green" style="font-size:0.75rem;">${convRating}</span></td>
+            <td>
+              <button class="btn btn-sm ${isSelected ? 'btn-success' : ''}" onclick="selectCandidate('${c.id}')">
+                ${isSelected ? 'Selected' : 'Choose'}
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+  </script>
+</body>
+</html>

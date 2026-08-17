@@ -161,16 +161,18 @@ class StudioEngine {
             <span>Aug Video #2 Studio</span>
           </a>
           <nav class="main-nav">
-            <a href="research.html" class="${activePage === 'research' ? 'active' : ''}">🎬 1. Research</a>
-            <a href="script_guru.html" class="${activePage === 'script_guru' ? 'active' : ''}">🧠 2. Script Guru</a>
-            <a href="scenes.html" class="${activePage === 'scenes' ? 'active' : ''}">📑 3. Scenes</a>
-            <a href="shotlist.html" class="${activePage === 'shotlist' ? 'active' : ''}">📊 4. Shotlist</a>
-            <a href="timeline.html" class="${activePage === 'timeline' ? 'active' : ''}">⏱️ 5. Timeline</a>
-            <a href="voice_over.html" class="${activePage === 'voice_over' ? 'active' : ''}">🎙️ 6. Voiceover</a>
-            <a href="gallery.html" class="${activePage === 'gallery' ? 'active' : ''}">🖼️ 7. Gallery</a>
-            <a href="tactic.html" class="${activePage === 'tactic' ? 'active' : ''}">⚔️ 8. Tactics</a>
-            <a href="analysis.html" class="${activePage === 'analysis' ? 'active' : ''}">📈 9. Analytics</a>
-            <a href="index.html" class="${activePage === 'index' ? 'active' : ''}">🏠 10. Overview</a>
+            <a href="source.html" class="${activePage === 'source' ? 'active' : ''}">📹 1. Source</a>
+            <a href="decision.html" class="${activePage === 'decision' ? 'active' : ''}">🎯 2. Decision</a>
+            <a href="research.html" class="${activePage === 'research' ? 'active' : ''}">🎬 3. Research</a>
+            <a href="script_guru.html" class="${activePage === 'script_guru' ? 'active' : ''}">🧠 4. Script Guru</a>
+            <a href="scenes.html" class="${activePage === 'scenes' ? 'active' : ''}">📑 5. Scenes</a>
+            <a href="shotlist.html" class="${activePage === 'shotlist' ? 'active' : ''}">📊 6. Shotlist</a>
+            <a href="timeline.html" class="${activePage === 'timeline' ? 'active' : ''}">⏱️ 7. Timeline</a>
+            <a href="voice_over.html" class="${activePage === 'voice_over' ? 'active' : ''}">🎙️ 8. Voiceover</a>
+            <a href="gallery.html" class="${activePage === 'gallery' ? 'active' : ''}">🖼️ 9. Gallery</a>
+            <a href="tactic.html" class="${activePage === 'tactic' ? 'active' : ''}">⚔️ 10. Tactics</a>
+            <a href="analysis.html" class="${activePage === 'analysis' ? 'active' : ''}">📈 11. Analytics</a>
+            <a href="index.html" class="${activePage === 'index' ? 'active' : ''}">🏠 12. Overview</a>
           </nav>
           <div class="header-actions">
             <button class="btn btn-sm" id="btn-sync" title="Sync state to Cloud / Local Snapshots">☁️ Sync State</button>

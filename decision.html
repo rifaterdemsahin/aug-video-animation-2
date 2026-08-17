@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2. Strategy Decision Engine — August Video Animation #2</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .decision-layout {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    @media (max-width: 1024px) {
+      .decision-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    .decision-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      position: relative;
+    }
+    .decision-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .selected-source-banner {
+      background: rgba(34, 197, 94, 0.06);
+      border: 1px solid var(--accent-green);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .contrast-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+    @media (max-width: 768px) {
+      .contrast-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .contrast-box-red {
+      background: rgba(239, 68, 68, 0.05);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+    }
+    .contrast-box-green {
+      background: rgba(34, 197, 94, 0.05);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+    }
+    .beat-card {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    .beat-number {
+      background: var(--accent-blue);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.75rem;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header"></header>
+
+  <main class="app-container">
+    <div class="view-header">
+      <div class="view-title-group">
+        <h1>🎯 2. Strategic Decision Engine</h1>
+        <p>Lock your video positioning, target client persona, narrative contrast formula, and call-to-action before moving into deep research & storyboard drafting.</p>
+      </div>
+      <div class="header-actions">
+        <a href="source.html" class="btn">← Back to 1. Source</a>
+        <button class="btn btn-success" id="btn-save-decision">💾 Lock Decision & Advance to 3. Research 🎬</button>
+      </div>
+    </div>
+
+    <!-- Active Source Video Recap & Embedded Player -->
+    <div class="selected-source-banner" style="display: block;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem;">
+        <div>
+          <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.25rem;">
+            <span class="badge badge-green">Locked Source Reference</span>
+            <span id="decision-source-creator" style="font-size:0.8rem; color:var(--text-muted);">Tech Vision & Fireship (3.2M subs)</span>
+          </div>
+          <h3 id="decision-source-title" style="font-size: 1.15rem; font-weight: 800; margin: 0; color: var(--text-primary);">
+            Why 80% of Enterprise AI Projects Fail
+          </h3>
+        </div>
+        <div style="display:flex; gap:0.5rem; align-items:center;">
+          <a href="source.html" class="btn btn-sm" style="text-decoration:none;">🔄 Change Source</a>
+          <a id="decision-source-ext-link" href="https://www.youtube.com/watch?v=8pTEmbeENF4" target="_blank" class="btn btn-sm btn-primary" style="text-decoration:none;">↗ Open on YouTube</a>
+        </div>
+      </div>
+
+      <!-- Responsive Embedded Video -->
+      <div style="position:relative; width:100%; max-width:680px; padding-bottom:38.25%; height:0; border-radius:var(--radius-sm); overflow:hidden; background:#000; border:1px solid var(--border-color); margin-top:0.5rem;">
+        <iframe 
+          id="decision-source-iframe"
+          style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;"
+          src="https://www.youtube-nocookie.com/embed/8pTEmbeENF4?rel=0" 
+          title="Reference Video" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+    <div class="decision-layout">
+      <!-- Main Strategic Decision Pillars -->
+      <section>
+        <!-- 1. The 4-Pillar Decision Framework (How We Decide) -->
+        <div class="decision-card" style="border-top: 3px solid var(--accent-gold);">
+          <div class="decision-card-header">
+            <h3 style="font-size: 1rem; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+              <span>📐 How We Make the Decision (The 4-Pillar Scoring Rubric)</span>
+            </h3>
+            <span class="badge badge-gold">Selection Logic</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+            A source video candidate is selected only when it maximizes audience pain, authority reversal, and downstream conversion into our <strong>Delivery Pilot Skool Community</strong>.
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.85rem; margin-bottom: 1rem;">
+            <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.85rem;">
+              <div style="font-size: 0.75rem; font-weight: 800; color: var(--accent-red); margin-bottom: 4px;">PILLAR 1: VIRAL AGONY (30%)</div>
+              <strong style="font-size: 0.85rem;">High Public Frustration</strong>
+              <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">Requires >1.5M views and heavy comment engagement complaining about AI failures or high costs.</p>
+            </div>
+
+            <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.85rem;">
+              <div style="font-size: 0.75rem; font-weight: 800; color: var(--accent-blue); margin-bottom: 4px;">PILLAR 2: CONTRAST PIVOT (30%)</div>
+              <strong style="font-size: 0.85rem;">"I Build For Others" Gap</strong>
+              <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">Must cleanly pivot from "Big Tech built a bloated toy" to "Here is how I build practical client automations".</p>
+            </div>
+
+            <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.85rem;">
+              <div style="font-size: 0.75rem; font-weight: 800; color: var(--accent-green); margin-bottom: 4px;">PILLAR 3: PROOF OF WORK (20%)</div>
+              <strong style="font-size: 0.85rem;">Live 16-Stage Demo</strong>
+              <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">We can demonstrate our live deterministic pipeline, Obsidian Second Brain, and code assets on-screen.</p>
+            </div>
+
+            <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.85rem;">
+              <div style="font-size: 0.75rem; font-weight: 800; color: var(--accent-purple); margin-bottom: 4px;">PILLAR 4: SKOOL CONVERSION (20%)</div>
+              <strong style="font-size: 0.85rem;">Natural Community Bridge</strong>
+              <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">The video conclusion seamlessly funnels the viewer to the <strong>Delivery Pilot Skool</strong> for templates & blueprints.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. The Core Reverse Marketing Contrast -->
+        <div class="decision-card">
+          <div class="decision-card-header">
+            <h3 style="font-size: 1rem; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+              <span>⚔️ 2. Narrative Contrast (Big Tech Problem vs. Your Solution)</span>
+            </h3>
+            <span class="badge badge-purple">Core Value Prop</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+            Clearly define what the viral reference proved is broken, and what practical solution you build for clients.
+          </p>
+
+          <div class="contrast-grid">
+            <div class="contrast-box-red">
+              <label class="form-label" style="color: var(--accent-red); font-weight: 700;">🔴 The Big Tech Trap / Bubble Flaw</label>
+              <textarea class="form-textarea" id="decision-problem" rows="3" style="font-size: 0.85rem;">Corporations tried to replace entire human teams with unconstrained black-box chatbots. Result: Hallucinations in production, legal risk, customer churn, and wasted millions.</textarea>
+            </div>
+            <div class="contrast-box-green">
+              <label class="form-label" style="color: var(--accent-green); font-weight: 700;">🟢 What I Build For Others (Your Solution)</label>
+              <textarea class="form-textarea" id="decision-solution" rows="3" style="font-size: 0.85rem;">I build deterministic human-in-the-loop AI automations and agentic pipelines that act as force-multipliers for client teams, with strict guardrails and immediate positive ROI.</textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Target Audience & Persona -->
+        <div class="decision-card">
+          <div class="decision-card-header">
+            <h3 style="font-size: 1rem; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+              <span>👥 3. Target Audience & Client Persona</span>
+            </h3>
+            <span class="badge badge-blue">Viewer Fit</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label">Primary Audience Persona</label>
+              <select class="form-select" id="decision-persona" style="width: 100%; padding: 0.5rem; background: var(--bg-surface-elevated); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: var(--radius-sm);">
+                <option value="business-owners" selected>Business Owners & Operations Directors (Seeking AI ROI)</option>
+                <option value="ctos-founders">CTOs & Technical Founders (Stuck in AI POC purgatory)</option>
+                <option value="agency-leads">Agency Owners & Knowledge Workers (Scaling output)</option>
+                <option value="investors">Investors & Tech Professionals (Filtering hype from reality)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Viewer Emotional Hook</label>
+              <input type="text" class="form-input" id="decision-emotion" value="Relief from AI hype anxiety + excitement for practical automation">
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Key Narrative Beat Structure (3 Minutes) -->
+        <div class="decision-card">
+          <div class="decision-card-header">
+            <h3 style="font-size: 1rem; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+              <span>🎬 4. Video Structure & Pacing Arc</span>
+            </h3>
+            <span class="badge badge-gold">3-Minute Model</span>
+          </div>
+
+          <div class="beat-card">
+            <div class="beat-number">1</div>
+            <div style="flex:1;">
+              <strong style="font-size: 0.85rem; color: var(--accent-red);">0:00 - 0:25: The Viral Pattern Interrupt Hook</strong>
+              <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 2px 0 0;">Acknowledge the viral video: Why Big Tech AI is failing right now and why CEOs are panicking.</p>
+            </div>
+          </div>
+
+          <div class="beat-card">
+            <div class="beat-number">2</div>
+            <div style="flex:1;">
+              <strong style="font-size: 0.85rem; color: var(--accent-blue);">0:25 - 1:15: The Root Cause Diagnosis</strong>
+              <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 2px 0 0;">Explain the architectural flaw: Black-box replacements vs deterministic task execution.</p>
+            </div>
+          </div>
+
+          <div class="beat-card">
+            <div class="beat-number">3</div>
+            <div style="flex:1;">
+              <strong style="font-size: 0.85rem; color: var(--accent-green);">1:15 - 2:30: The Practical Solution ("How I Build For Others")</strong>
+              <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 2px 0 0;">Show real live architecture: 16-stage pipeline, Obsidian second brain integration, and MCP tools.</p>
+            </div>
+          </div>
+
+          <div class="beat-card">
+            <div class="beat-number">4</div>
+            <div style="flex:1;">
+              <strong style="font-size: 0.85rem; color: var(--accent-purple);">2:30 - 3:00: Delivery Pilot Skool CTA & Payoff</strong>
+              <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 2px 0 0;">Send viewers to the <strong>Delivery Pilot Skool Community</strong> to grab blueprints, templates & co-build.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sidebar: Delivery Pilot Skool Community Funnel & Decision Checklist -->
+      <aside>
+        <!-- 🚀 Skool Traffic Funnel Box -->
+        <div class="card" style="margin-bottom: 1.25rem; border-top: 3px solid #ff7a00; background: rgba(255, 122, 0, 0.04);">
+          <div class="card-header">
+            <span class="card-title" style="color: #ff7a00; display:flex; align-items:center; gap:0.4rem;">
+              <span>🎓 Delivery Pilot Skool Funnel</span>
+            </span>
+            <span class="badge" style="background:#ff7a00; color:#fff;">Target CTA</span>
+          </div>
+
+          <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+            All video traffic converts into our <strong>Delivery Pilot Skool Community</strong>:
+          </p>
+
+          <div class="form-group">
+            <label class="form-label" style="font-size:0.75rem;">Community Destination URL</label>
+            <div style="display:flex; gap:0.25rem;">
+              <input type="text" class="form-input" id="skool-url" value="https://www.skool.com/delivery-pilot-8938" readonly style="font-size:0.8rem; font-family:var(--font-mono); color:var(--accent-blue);">
+              <a href="https://www.skool.com/delivery-pilot-8938" target="_blank" class="btn btn-sm" style="text-decoration:none;">↗</a>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" style="font-size:0.75rem;">Spoken Outro CTA (Spoken at 2:40)</label>
+            <textarea class="form-textarea" id="decision-cta" rows="3" style="font-size: 0.8rem; font-family:var(--font-mono);">"If you want to deploy this exact deterministic 16-stage pipeline for your own business or clients, join our free Delivery Pilot community on Skool at skool.com/delivery-pilot-8938. The full blueprint and code templates are waiting for you inside."</textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" style="font-size:0.75rem;">YouTube Pinned Comment</label>
+            <textarea class="form-textarea" id="decision-pinned" rows="3" style="font-size: 0.8rem; font-family:var(--font-mono);">🚀 Grab the 16-stage deterministic AI architecture blueprint & prompt manifests in the Delivery Pilot Community: https://www.skool.com/delivery-pilot-8938
+
+👇 Drop your biggest AI workflow bottleneck below — answering every comment!</textarea>
+          </div>
+
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" style="font-size:0.75rem;">YouTube Description Top 2 Lines</label>
+            <textarea class="form-textarea" id="decision-desc" rows="2" style="font-size: 0.8rem; font-family:var(--font-mono);">🎓 Join the Delivery Pilot Skool Community: https://www.skool.com/delivery-pilot-8938
+🛠️ Build practical, deterministic AI systems that actually deliver positive ROI for clients.</textarea>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">✅ Decision Checklist</span>
+          </div>
+          <div style="font-size: 0.8rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.5rem;">
+            <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+              <input type="checkbox" checked> 4-Pillar Scoring evaluated
+            </label>
+            <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+              <input type="checkbox" checked> "I Build For Others" contrast locked
+            </label>
+            <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+              <input type="checkbox" checked> Delivery Pilot Skool URL linked
+            </label>
+            <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+              <input type="checkbox" checked> Spoken outro + Pinned comment set
+            </label>
+          </div>
+          <button class="btn btn-success" style="width: 100%; margin-top: 1rem;" onclick="saveAndProceed()">
+            Advance to 3. Research 🎬
+          </button>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    const candidates = {
+      "cand-1": {
+        title: "Replacing Humans with AI is Going Horribly Wrong",
+        creator: "ColdFusion (5.2M subs)",
+        youtubeId: "QX1Xwzm9yHY",
+        url: "https://www.youtube.com/watch?v=QX1Xwzm9yHY",
+        problem: "Corporations tried to replace entire human teams with unconstrained black-box chatbots. Result: Hallucinations in production, legal risk, customer churn, and wasted millions.",
+        solution: "I build deterministic human-in-the-loop AI automations and agentic pipelines that act as force-multipliers for client teams, with strict guardrails and immediate positive ROI."
+      },
+      "cand-3": {
+        title: "Why Building AI Data Centres Isn’t Working Anymore",
+        creator: "ColdFusion (5.2M subs)",
+        youtubeId: "eXXwN_TDdLU",
+        url: "https://www.youtube.com/watch?v=eXXwN_TDdLU",
+        problem: "Massive CapEx into foundation model infrastructure is yielding diminishing returns and unprofitable enterprise software applications.",
+        solution: "I build lean, lightweight AI pipelines that run with near-zero marginal compute cost and generate direct positive ROI from day 1."
+      },
+      "cand-2": {
+        title: "MIT Just Found The Cause Of The AI Bubble",
+        creator: "Economics Explained (2.8M subs)",
+        youtubeId: "1zlD0K09IKE",
+        url: "https://www.youtube.com/watch?v=1zlD0K09IKE",
+        problem: "Academic research shows generic LLMs fail to move the needle on real macroeconomic productivity.",
+        solution: "When I build for others, we integrate local state persistence, MCP toolchains, and deterministic task gates that measure real business output."
+      },
+      "cand-4": {
+        title: "The 7 Trillion AI Gamble Is Failing. Big Tech is TRAPPED Right NOW",
+        creator: "The Infographics Show (15.5M subs)",
+        youtubeId: "OunJtLnyPT4",
+        url: "https://www.youtube.com/watch?v=OunJtLnyPT4",
+        problem: "Tech CEOs quietly cancelling AI plans because systems are expensive, legally risky, and difficult to control once moving from demos into real world.",
+        solution: "Tech CEOs cancel because bloated demos don't scale. Here is how I build lean, bulletproof AI automation systems for client workflows with zero legal risk."
+      }
+    };
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      studio.injectHeaderAndFooter("decision");
+      const selectedId = localStorage.getItem("wiganimation_selected_candidate") || "cand-3";
+      const cand = candidates[selectedId] || candidates["cand-3"];
+
+      document.getElementById("decision-source-title").textContent = cand.title;
+      document.getElementById("decision-source-creator").textContent = cand.creator;
+      document.getElementById("decision-source-iframe").src = `https://www.youtube-nocookie.com/embed/${cand.youtubeId}?rel=0`;
+      document.getElementById("decision-source-ext-link").href = cand.url;
+      document.getElementById("decision-problem").value = cand.problem;
+      document.getElementById("decision-solution").value = cand.solution;
+
+      document.getElementById("btn-save-decision").addEventListener("click", saveAndProceed);
+    });
+
+    function saveAndProceed() {
+      const decisionData = {
+        problem: document.getElementById("decision-problem").value,
+        solution: document.getElementById("decision-solution").value,
+        persona: document.getElementById("decision-persona").value,
+        emotion: document.getElementById("decision-emotion").value,
+        skoolUrl: "https://www.skool.com/delivery-pilot-8938",
+        cta: document.getElementById("decision-cta").value,
+        pinned: document.getElementById("decision-pinned").value,
+        desc: document.getElementById("decision-desc").value,
+        lockedAt: new Date().toISOString()
+      };
+      localStorage.setItem("wiganimation_decision_data", JSON.stringify(decisionData));
+      if (studio.state) {
+        studio.state.decisionData = decisionData;
+        studio.saveLocalState();
+      }
+      studio.toast("Strategic Decision & Skool Funnel locked! Redirecting to 3. Research...", "success");
+      setTimeout(() => {
+        window.location.href = "research.html";
+      }, 600);
+    }
+  </script>
+</body>
+</html>
